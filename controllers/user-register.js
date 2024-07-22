@@ -5,7 +5,8 @@ export default class UserRegisterController {
         try{
             const data = req.body;
             const response = await UserRegisterService.register(data);
-            res.status(200).json(response);
+            const token = jwt.sign({ id: response.id }, process.env.JWT_SECRET, { expiresIn: '3h' });
+            res.status(200).json({ user: response, token: token});
         } catch (err){
             res.status(err.status | 400).json({ error: err.message })
         }

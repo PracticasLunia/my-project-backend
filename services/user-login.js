@@ -21,7 +21,7 @@ export default class UserLoginService {
             error.status = 400;
             error.message = "Incorrect password";
             throw error;
-        }        
+        }    
         return user;
     }
 }
