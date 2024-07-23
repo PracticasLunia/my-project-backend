@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import adminRoutes from './routes/admin.js';
-import publicRoutes from './routes/public.js';
-import sharedRoutes from './routes/shared.js';
+import adminRoutes from './ui/routes/admin.js';
+import publicRoutes from './ui/routes/public.js';
+import sharedRoutes from './ui/routes/shared.js';
 import validateJWT from './middlewares/jwt.js';
 
 const app = express();

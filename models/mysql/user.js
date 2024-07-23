@@ -46,6 +46,6 @@ if (sequelize !== null) {
     );
     
     User.sync({ force: true })
-} 
+  } 
 
 export default User

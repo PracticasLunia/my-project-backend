@@ -1,4 +1,4 @@
-import UserRepository from "../repositories/user.js";
+import UserRepository from "../repositories/user-repository.js";
 import bcrypt from 'bcrypt';
 
 export default class UserLoginService {

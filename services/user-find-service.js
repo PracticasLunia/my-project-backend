@@ -1,4 +1,4 @@
-import UserRepository from "../repositories/user.js";
+import UserRepository from "../repositories/user-repository.js";
 
 export default class UserFindService {
     static async find(name, email){

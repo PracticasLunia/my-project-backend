@@ -32,7 +32,7 @@ export default class UserRepository {
         try {
             return await User.update(user, { where: { id: id } });
         } catch (err) {
-            throw new Error("Error while updatin user")
+            throw new Error("Error while updating user")
         }
     }
 
