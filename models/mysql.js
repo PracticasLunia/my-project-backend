@@ -2,8 +2,6 @@ import { Sequelize } from 'sequelize';
 import mysql from 'mysql2/promise'
 import 'dotenv/config';
 
-let db = {};
-
 const config = {
     host: process.env.MYSQL_HOST,
     port: process.env.MYSQL_PORT,
@@ -11,14 +9,20 @@ const config = {
     password: process.env.MYSQL_PASSWORD,
 }
 
-const connection = await mysql.createConnection(config);
-await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.MYSQL_DATABASE}\`;`);
+let sequelize = null;
 
-const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
-    host: process.env.MYSQL_HOST,
-    dialect: 'mysql',
-});
+try {
+    const connection = await mysql.createConnection(config);
+    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.MYSQL_DATABASE}\`;`);
 
-await sequelize.sync({ force: true });
+    const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
+        host: process.env.MYSQL_HOST,
+        dialect: 'mysql',
+    });
+
+    await sequelize.sync({ force: true });
+} catch (err) {
+    console.error('Unable to connect to the database');
+}
 
 export default sequelize;

@@ -8,41 +8,44 @@ class User extends Model {
     password;
     admin;
 }
-User.init(    
-    {   
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        email: {
-            type: DataTypes.STRING,
-            unique: true,
-            allowNull: false,
-            validate: {
-                isEmail: true
+
+if (sequelize !== null) {
+    User.init(    
+        {   
+            id: {
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                primaryKey: true
+            },
+            name: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            email: {
+                type: DataTypes.STRING,
+                unique: true,
+                allowNull: false,
+                validate: {
+                    isEmail: true
+                }
+            },
+            password: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            admin: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
             }
         },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        admin: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false
+        {
+            sequelize,
+            modelName: 'User'
         }
-    },
-    {
-        sequelize,
-        modelName: 'User'
-    }
-);
-
-User.sync({ force: true })
+    );
+    
+    User.sync({ force: true })
+} 
 
 export default User
