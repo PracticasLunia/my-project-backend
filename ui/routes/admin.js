@@ -1,8 +1,8 @@
 import express from 'express';
+import UserFindController from '../controllers/user-find-controller.js';
+
 let router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('Hello admin');
-})
+router.post('/user', UserFindController.find)
 
 export default router;
