@@ -1,8 +1,8 @@
-import jws from 'jsonwebtoken';
-import dotenv from 'dotenv/config';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 export default function verifyJWT(req, res, next) {
-    const token = req.headers['Authorization'] || "";
+    let token = req.headers['authorization'] || "";
     token = token.split(' ')[1];
     if (!token) {
         return res.status(401).json({ auth: false, message: 'No token provided' });
