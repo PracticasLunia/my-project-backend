@@ -2,11 +2,6 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../mysql.js";
 
 class User extends Model {
-    id;
-    name;
-    email;
-    password;
-    admin;
 }
 
 if (sequelize !== null) {
@@ -37,6 +32,11 @@ if (sequelize !== null) {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false,
                 allowNull: false
+            },
+            verified: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
             }
         },
         {
@@ -45,7 +45,7 @@ if (sequelize !== null) {
         }
     );
     
-    User.sync({ force: true })
+    //User.sync({ force: true })
   } 
 
 export default User
