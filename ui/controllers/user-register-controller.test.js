@@ -59,7 +59,6 @@ describe('Tests for User Register Controller', () => {
         const res = mockResponse();
         UserRegisterService.register.mockImplementation(() => {
             const error = new Error("Error message");
-            error.status = 400;
             throw error;
         });
         await UserRegisterController.register(req, res);

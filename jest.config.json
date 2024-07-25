@@ -1,0 +1,11 @@
+{
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+        "node_modules",
+        "jest.config.json",
+        "index.js",
+        "ui/routes",
+        "models"
+    ],
+    "coverageDirectory": "<rootDir>/coverage/"
+}
