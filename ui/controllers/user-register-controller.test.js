@@ -7,7 +7,7 @@ import UserRegisterController from './user-register-controller.js'
 describe('Tests for User Register Controller', () => {
     beforeAll(() => {
         UserRegisterService.register = jest.fn(UserRegisterService.register);
-        jwt.sign = jest.fn(jwt.sign);
+        jwt.sign = jest.fn(() => { return 'test-token' });
     });
 
     beforeEach(() => {

@@ -7,7 +7,7 @@ import UserLoginController from './user-login-controller.js'
 describe('Tests for User Login Controller', () => {
     beforeAll(() => {
         UserLoginService.login = jest.fn(UserLoginService.login);
-        jwt.sign = jest.fn(jwt.sign);
+        jwt.sign = jest.fn(() => { return 'test-token' });
     });
 
     beforeEach(() => {

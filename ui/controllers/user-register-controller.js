@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import 'dotenv/config';
 import UserRegisterService from "../../services/user-register-service.js";
 
 export default class UserRegisterController {

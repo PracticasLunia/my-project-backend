@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 import UserLoginService from '../../services/user-login-service.js';
 
 export default class UserLoginController {
