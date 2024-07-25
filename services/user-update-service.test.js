@@ -1,10 +1,13 @@
+import bcrypt from 'bcrypt';
 import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globals';
 import UserUpdateService from './user-update-service';
 import UserRepository from '../repositories/user-repository';
 
 describe('Tests for User Update Controller', () => {
     beforeAll(() => {
+        UserRepository.get = jest.fn(UserRepository.get);
         UserRepository.update = jest.fn(UserRepository.update);
+        bcrypt.hash = jest.fn(() => { return "password"; });
     });
 
     beforeEach(() => {
@@ -15,8 +18,11 @@ describe('Tests for User Update Controller', () => {
         UserRepository.update.mockImplementation(() => {
             return [];
         });
+        UserRepository.get.mockImplementation(() => {
+            return { password: "test"};
+        });
 
-        await UserUpdateService.update(1);
+        await UserUpdateService.update(1, {password: "test"} );
         expect(UserRepository.update).toBeCalled();
     });
 
@@ -24,8 +30,11 @@ describe('Tests for User Update Controller', () => {
         UserRepository.update.mockImplementation(() => {
             return 1;
         });
+        UserRepository.get.mockImplementation(() => {
+            return { password: "test"};
+        });
 
-        const users = await UserUpdateService.update(1);
+        const users = await UserUpdateService.update(1, {password: "data"} );
         expect(users).toStrictEqual(1);
     });
 
@@ -33,8 +42,11 @@ describe('Tests for User Update Controller', () => {
         UserRepository.update.mockImplementation(() => {
             return 0;
         });
+        UserRepository.get.mockImplementation(() => {
+            return { password: "test"};
+        });
         try {
-            await UserUpdateService.update(1);
+            await UserUpdateService.update(1, {password: "data"} );
             expect(true).toBe(false);
         }catch (err) {
             expect(err.message).toBe("Can't update the user data");
