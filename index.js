@@ -6,6 +6,8 @@ import publicRoutes from './ui/routes/public.js';
 import sharedRoutes from './ui/routes/shared.js';
 import validateJWT from './middlewares/jwt.js';
 import corsOptions from './middlewares/cors.js';
+import isAdmin from './middlewares/admin.js';
+import isVerified from './middlewares/verified.js';
 
 const app = express();
 app.disable("x-powered-by");
@@ -16,8 +18,8 @@ app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 
 app.use('/public/', publicRoutes);
-app.use('/shared/', validateJWT, sharedRoutes);
-app.use('/admin/', validateJWT, adminRoutes);
+app.use('/shared/', [validateJWT, isVerified], sharedRoutes);
+app.use('/admin/', [validateJWT, isAdmin, isVerified], adminRoutes);
 app.get('/', (req, res) => {
     res.send('Hello World');  
 });

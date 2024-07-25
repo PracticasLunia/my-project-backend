@@ -3,8 +3,11 @@ import UserFindController from '../controllers/user-find-controller.js';
 import UserVerifyController from '../controllers/user-verify-controller.js';
 import UserGetController from '../controllers/user-get-controller.js';
 import UserUpdateController from '../controllers/user-update-controller.js';
+import UserIsAdminController from '../controllers/user-is-admin-controller.js';
 
 let router = express.Router();
+
+router.get('/is-admin', UserIsAdminController.isAdmin)
 
 router.post('/user', UserFindController.find)
 router.get('/user/:id', UserGetController.get)

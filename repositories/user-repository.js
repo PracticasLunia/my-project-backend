@@ -22,7 +22,7 @@ export default class UserRepository {
 
     static async create(user) {
         try {
-            return await User.create(user);
+            return (await User.create(user, {raw: true})).dataValues;
         } catch (err) {
             throw new Error("Some field is wrong or user with email already exists")
         }

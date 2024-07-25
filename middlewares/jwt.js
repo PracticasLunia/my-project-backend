@@ -10,10 +10,10 @@ export default function verifyJWT(req, res, next) {
 
     jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
         if (err) {
-            return res.status(401).json({ auth: false, message: 'Failed to authenticate token' });
+            return res.status(401).json({ auth: false, message: 'Token expired' });
         }
 
-        req.user = decoded.id;
+        req.user = decoded;
         next();
     });
 }

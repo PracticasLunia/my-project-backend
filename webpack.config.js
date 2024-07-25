@@ -1,4 +1,4 @@
-import path from 'path';
+import path, { resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -11,6 +11,11 @@ export default {
     path: path.join(__dirname, 'dist'),
     publicPath: '/',
     filename: 'index.js',
+  },
+  resolve: {
+    modules: [
+      "node_modules"
+    ],
   },
   target: 'node',
 };
