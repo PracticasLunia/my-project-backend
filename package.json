@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon ./index.js",
     "test": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles ",
-    "testcoverage": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --collectCoverage", 
+    "testcoverage": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --collectCoverage",
     "start": "node ./index.js"
   },
   "jest": {
@@ -30,6 +30,8 @@
     "jest-mock-req-res": "^1.0.2",
     "mock-req-res": "^1.2.1",
     "nodemon": "^3.1.4",
-    "supertest": "^7.0.0"
+    "supertest": "^7.0.0",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
   }
 }
