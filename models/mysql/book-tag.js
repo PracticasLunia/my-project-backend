@@ -3,21 +3,23 @@ import Book from './book.js';
 import Tag from './tag.js';
 
 export default class BookTag extends Model {
-    init(sequelize) {
+    static init(sequelize) {
         super.init({   
             bookId: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING,
                 references: {
                     model: Book,
-                    key: 'id'
-                }
+                    key: 'isbn'
+                },
+                allowNull: false
             },
             tagId: {
                 type: DataTypes.INTEGER,
                 references: {
                     model: Tag,
                     key: 'id'
-                }
+                },
+                allowNull: false
             },
         },
         {

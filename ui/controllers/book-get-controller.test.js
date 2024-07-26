@@ -1,41 +1,41 @@
 import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globals';
 import { mockRequest, mockResponse } from 'jest-mock-req-res';
-import UserGetService from '../../services/user-get-service.js';
-import UserGetController from './user-get-controller.js'
+import BookGetService from '../../services/book-get-service.js';
+import BookGetController from './book-get-controller.js'
 
-describe('Tests for User Get Controller', () => {
+describe('Tests for Book Get Controller', () => {
     beforeAll(() => {
-        UserGetService.get = jest.fn(UserGetService.get);
+        BookGetService.get = jest.fn(BookGetService.get);
     });
 
     beforeEach(() => {
-        UserGetService.get.mockClear();
+        BookGetService.get.mockClear();
     });
 
-    test('Shoud call User Get Service', async () => {
-        const req = mockRequest({ body: { name: '', email: ''}});
+    test('Shoud call Book Get Service', async () => {
+        const req = mockRequest({ body: { isbn: ''}});
         const res = mockResponse();
 
-        await UserGetController.get(req, res);
-        expect(UserGetService.get).toBeCalled();
+        await BookGetController.get(req, res);
+        expect(BookGetService.get).toBeCalled();
     });
 
     test('Should return code 200 on response ', async () => {
-        const req = mockRequest({ body: { name: '', email: ''}});
+        const req = mockRequest({ body: { isbn: ''}});
         const res = mockResponse();
-        UserGetService.get.mockImplementation(() => {
+        BookGetService.get.mockImplementation(() => {
             return [1];
         });
 
-        await UserGetController.get(req, res);
+        await BookGetController.get(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
     });
 
     test('Should return the return of the service on response', async () => {
         const req = mockRequest();
         const res = mockResponse();
-        UserGetService.get.mockResolvedValue([1]);
-        await UserGetController.get(req, res);
+        BookGetService.get.mockResolvedValue([1]);
+        await BookGetController.get(req, res);
 
         expect(res.json).toBeCalledWith([1]);
     });
@@ -43,11 +43,11 @@ describe('Tests for User Get Controller', () => {
     test('Should return 400 error and a error message on response if service fails', async () => {
         const req = mockRequest();
         const res = mockResponse();
-        UserGetService.get.mockImplementation(() => {
+        BookGetService.get.mockImplementation(() => {
             const error = new Error("Error message");
             throw error;
         });
-        await UserGetController.get(req, res);
+        await BookGetController.get(req, res);
 
         expect(res.status).toBeCalledWith(400);
         expect(res.json).toBeCalledWith({ error: "Error message" });

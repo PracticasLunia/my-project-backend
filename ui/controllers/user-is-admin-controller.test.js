@@ -4,16 +4,16 @@ import UserIsAdminController from './user-is-admin-controller';
 
 describe('Tests for User Is Admin Controller', () => {
     test('Should return code 200 on response ', async () => {
-        const req = mockRequest({user: {}});
-        const res = mockResponse();
+        const req = mockRequest();
+        const res = mockResponse({locals: {user: {}}});
 
         await UserIsAdminController.isAdmin(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
     });
 
     test('Should return a empty dict on response', async () => {
-        const req = mockRequest({user: {}});
-        const res = mockResponse();
+        const req = mockRequest();
+        const res = mockResponse({locals: {user: {}}});
 
         await UserIsAdminController.isAdmin(req, res);
         expect(res.json).toBeCalledWith({});

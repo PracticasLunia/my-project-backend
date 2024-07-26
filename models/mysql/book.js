@@ -1,12 +1,9 @@
 import { DataTypes, Model } from "sequelize";
+import Category from "./category.js";
 
 export default class Book extends Model {
-    init(sequelize) {
+    static init(sequelize) {
         super.init({   
-            id: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true
-            },
             title: {
                 type: DataTypes.STRING,
                 allowNull: false
@@ -17,7 +14,7 @@ export default class Book extends Model {
             },
             isbn: {
                 type: DataTypes.STRING,
-                unique: true,
+                primaryKey: true,
                 allowNull: false
             },
             genre: {
@@ -56,10 +53,18 @@ export default class Book extends Model {
                 type: DataTypes.STRING,
                 allowNull: false
             },
+            category: {
+                type: DataTypes.INTEGER,
+                references: {
+                    model: Category,
+                    key: 'id'
+                },
+                allowNull: false
+            },
             //category: {}, One-To-One
             //tags: [{}], One-To-Many
             averageRating: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.FLOAT,
                 allowNull: false
             },
             ratingCount: {

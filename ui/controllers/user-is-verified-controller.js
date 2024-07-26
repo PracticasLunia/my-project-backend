@@ -1,7 +1,7 @@
 export default class UserIsVerifiedController {
     static async isVerified(req, res){
         try{
-            if(req.user)
+            if(res.locals.user)
                 res.status(200).json({});
             else
                 throw new Error("");

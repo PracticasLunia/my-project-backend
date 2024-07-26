@@ -4,16 +4,16 @@ import UserIsVerifiedController from './user-is-verified-controller';
 
 describe('Tests for User Is Verified Controller', () => {
     test('Should return code 200 on response ', async () => {
-        const req = mockRequest({user: {}});
-        const res = mockResponse();
+        const req = mockRequest();
+        const res = mockResponse({locals: {user: {}}});
 
         await UserIsVerifiedController.isVerified(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
     });
 
     test('Should return a empty dict on response', async () => {
-        const req = mockRequest({user: {}});
-        const res = mockResponse();
+        const req = mockRequest();
+        const res = mockResponse({locals: {user: {}}});
 
         await UserIsVerifiedController.isVerified(req, res);
         expect(res.json).toBeCalledWith({});

@@ -38,7 +38,7 @@ describe('Tests for User Find Controller', () => {
     });
 
     test('All methods throw an error if User model fails', async () => {
-        await User.findByPk.mockImplementation(() => { throw new Error(""); });
+        User.findByPk.mockImplementation(() => { throw new Error(""); });
         User.findOne.mockImplementation(() => { throw new Error(""); });
         User.create.mockImplementation(() => { throw new Error(""); });
         User.destroy.mockImplementation(() => { throw new Error(""); });

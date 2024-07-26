@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 
 export default class Tag extends Model {
-    init(sequelize) {
+    static init(sequelize) {
         super.init({   
             id: {
                 type: DataTypes.INTEGER,

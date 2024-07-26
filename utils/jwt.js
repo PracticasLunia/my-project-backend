@@ -9,7 +9,6 @@ export default class JWTUtils {
         const refreshToken = jwt.sign(data, process.env.JWT_REFRESH_SECRET, { expiresIn: '24h' });
         res.cookie('token', token, { httpOnly: false, path: '/', maxAge: 2 * 60 * 60 * 1000, secure: false, sameSite: 'strict' });
         res.cookie('refreshToken', refreshToken, { httpOnly: false, path: '/', maxAge: 24 * 60 * 60 * 1000, secure: false, sameSite: 'strict' });
-
         return {token: token, refreshToken: refreshToken}
     }
 

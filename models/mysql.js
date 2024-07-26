@@ -8,7 +8,6 @@ import Book from './mysql/book.js';
 import BookTag from './mysql/book-tag.js';
 
 if(process.env.NODE_ENV !== 'test'){
-
     const config = {
         host: process.env.MYSQL_HOST,
         port: process.env.MYSQL_PORT,
@@ -31,11 +30,5 @@ if(process.env.NODE_ENV !== 'test'){
     Book.init(sequelize);
     BookTag.init(sequelize);
 
-    Category.hasMany(Book, { foreignKey: 'id', as: 'category', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
-    Book.belongsTo(Category);
-
-    Book.belongsToMany(Tag, { through: BookTag});
-    Tag.belongsToMany(Book, { through: BookTag});
-
-    await sequelize.sync({ force: true });
+    //await sequelize.sync({ force: true });
 }
