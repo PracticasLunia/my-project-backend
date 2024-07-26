@@ -59,7 +59,6 @@ describe('Tests for User Login Controller', () => {
         const res = mockResponse();
         UserLoginService.login.mockImplementation(() => {
             const error = new Error("Error message");
-            error.status = 400;
             throw error;
         });
         await UserLoginController.login(req, res);

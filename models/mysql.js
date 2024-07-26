@@ -1,8 +1,11 @@
 import { Sequelize } from 'sequelize';
 import mysql from 'mysql2/promise'
 import 'dotenv/config';
-
-let sequelize = null;
+import User from './mysql/user.js';
+import Category from './mysql/category.js';
+import Tag from './mysql/tag.js';
+import Book from './mysql/book.js';
+import BookTag from './mysql/book-tag.js';
 
 if(process.env.NODE_ENV !== 'test'){
 
@@ -16,14 +19,23 @@ if(process.env.NODE_ENV !== 'test'){
     const connection = await mysql.createConnection(config);
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.MYSQL_DATABASE}\`;`);
 
-    sequelize = await new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
+    const sequelize = await new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
         host: process.env.MYSQL_HOST,
         dialect: 'mysql',
         logging: false,
     });
 
+    User.init(sequelize);
+    Category.init(sequelize);
+    Tag.init(sequelize);
+    Book.init(sequelize);
+    BookTag.init(sequelize);
+
+    Category.hasMany(Book, { foreignKey: 'id', as: 'category', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
+    Book.belongsTo(Category);
+
+    Book.belongsToMany(Tag, { through: BookTag});
+    Tag.belongsToMany(Book, { through: BookTag});
+
     await sequelize.sync({ force: true });
-
 }
-
-export default sequelize;

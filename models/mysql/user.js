@@ -1,12 +1,8 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../mysql.js";
 
-class User extends Model {
-}
-
-if (sequelize !== null) {
-    User.init(    
-        {   
+export default class User extends Model {
+    init(sequelize) {
+        super.init({   
             id: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
@@ -41,11 +37,9 @@ if (sequelize !== null) {
         },
         {
             sequelize,
+            timestamps: true,
             modelName: 'User'
         }
-    );
-    
-    //User.sync({ force: true })
-  } 
-
-export default User
+        );
+    }
+};

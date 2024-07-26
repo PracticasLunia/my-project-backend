@@ -45,7 +45,6 @@ describe('Tests for User Get Controller', () => {
         const res = mockResponse();
         UserGetService.get.mockImplementation(() => {
             const error = new Error("Error message");
-            error.status = 400;
             throw error;
         });
         await UserGetController.get(req, res);
