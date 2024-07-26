@@ -13,7 +13,7 @@ export default class CategoryRepository {
         try {
             return (await Category.create(category, {raw: true})).dataValues;
         } catch (err) {
-            throw new Error("Some field is wrong or category with email already exists")
+            throw new Error("Some field is wrong or category already exists")
         }
     }
 
@@ -30,6 +30,14 @@ export default class CategoryRepository {
             return await Category.destroy({ where: { id: id } });
         } catch (err) {
             throw new Error("Error while deleting category")
+        }
+    }
+
+    static async getAll() {
+        try {
+            return await Category.findAll({raw: true});
+        } catch (err) {
+            throw new Error("Error while getting categories")
         }
     }
 }

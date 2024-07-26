@@ -16,7 +16,7 @@ export default class BookRepository {
         try {
             return (await Book.create(book, {raw: true})).dataValues;
         } catch (err) {
-            throw new Error("Some field is wrong or book with email already exists")
+            throw new Error("Some field is wrong or book with isbn already exists")
         }
     }
 

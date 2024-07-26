@@ -46,7 +46,7 @@ describe('Tests for Tag Find Controller', () => {
             await TagRepository.create({});
             expect(true).toBe(false);
         } catch (err) {
-            expect(err.message).toBe("Some field is wrong or tag with email already exists");
+            expect(err.message).toBe("Some field is wrong or tag already exists");
         }
 
         try {

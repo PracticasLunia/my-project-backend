@@ -6,6 +6,7 @@ describe('Tests for Category Find Controller', () => {
     beforeAll(() => {
         Category.findByPk = jest.fn(() => { return {}; });
         Category.create = jest.fn(() => { return {}; });
+        Category.findAll = jest.fn(() => { return [{}]; });
         Category.destroy = jest.fn(() => { return 1; });
         Category.update = jest.fn(() => { return {}; });
     });
@@ -13,6 +14,7 @@ describe('Tests for Category Find Controller', () => {
     beforeEach(() => {
         Category.findByPk.mockClear();
         Category.create.mockClear();
+        Category.findAll.mockClear();
         Category.destroy.mockClear();
         Category.update.mockClear();
     });
@@ -22,15 +24,18 @@ describe('Tests for Category Find Controller', () => {
         CategoryRepository.create({});
         CategoryRepository.delete(1);
         CategoryRepository.update(1, {});
+        CategoryRepository.getAll();
 
         expect(Category.findByPk).toBeCalled();
         expect(Category.create).toBeCalled();
         expect(Category.destroy).toBeCalled();
+        expect(Category.findAll).toBeCalled();
         expect(Category.update).toBeCalled();
     });
 
     test('All methods throw an error if Category model fails', async () => {
         Category.findByPk.mockImplementation(() => { throw new Error(""); });
+        Category.findAll.mockImplementation(() => { throw new Error(""); });
         Category.create.mockImplementation(() => { throw new Error(""); });
         Category.destroy.mockImplementation(() => { throw new Error(""); });
         Category.update.mockImplementation(() => { throw new Error(""); });
@@ -46,7 +51,7 @@ describe('Tests for Category Find Controller', () => {
             await CategoryRepository.create({});
             expect(true).toBe(false);
         } catch (err) {
-            expect(err.message).toBe("Some field is wrong or category with email already exists");
+            expect(err.message).toBe("Some field is wrong or category already exists");
         }
 
         try {
@@ -61,6 +66,13 @@ describe('Tests for Category Find Controller', () => {
             expect(true).toBe(false);
         } catch (err) {
             expect(err.message).toBe("Error while updating category");
+        }
+
+        try {
+            await CategoryRepository.getAll();
+            expect(true).toBe(false);
+        } catch (err) {
+            expect(err.message).toBe("Error while getting categories");
         }
     });
 });

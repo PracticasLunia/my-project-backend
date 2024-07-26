@@ -59,7 +59,7 @@ export default class Book extends Model {
                     model: Category,
                     key: 'id'
                 },
-                allowNull: false
+                allowNull: true
             },
             //category: {}, One-To-One
             //tags: [{}], One-To-Many

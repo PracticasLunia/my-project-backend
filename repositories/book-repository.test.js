@@ -51,7 +51,7 @@ describe('Tests for Book Find Controller', () => {
             await BookRepository.create({});
             expect(true).toBe(false);
         } catch (err) {
-            expect(err.message).toBe("Some field is wrong or book with email already exists");
+            expect(err.message).toBe("Some field is wrong or book with isbn already exists");
         }
 
         try {

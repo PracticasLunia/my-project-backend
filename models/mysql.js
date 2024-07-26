@@ -30,5 +30,7 @@ if(process.env.NODE_ENV !== 'test'){
     Book.init(sequelize);
     BookTag.init(sequelize);
 
+    //Book.sync({ force: true })
+
     //await sequelize.sync({ force: true });
 }

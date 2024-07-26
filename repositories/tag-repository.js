@@ -13,7 +13,7 @@ export default class TagRepository {
         try {
             return (await Tag.create(tag, {raw: true})).dataValues;
         } catch (err) {
-            throw new Error("Some field is wrong or tag with email already exists")
+            throw new Error("Some field is wrong or tag already exists")
         }
     }
 
