@@ -3,9 +3,9 @@
     "coveragePathIgnorePatterns": [
         "node_modules",
         "jest.config.json",
-        "index.js",
-        "ui/routes",
-        "models"
+        "src/index.js",
+        "src/ui/routes",
+        "src/models"
     ],
     "coverageDirectory": "<rootDir>/coverage/"
 }
