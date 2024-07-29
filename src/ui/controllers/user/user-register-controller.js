@@ -6,7 +6,7 @@ export default class UserRegisterController {
         try{
             const data = req.body;
             const response = await UserRegisterService.register(data);
-            JWTUtils.generateAndSendTokens(response, res)
+            JWTUtils.generateAndSendTokens(response.dataValues, res)
             res.status(200).json(response);
         } catch (err){
             res.status(err.status || 400).json({ error: err.message })

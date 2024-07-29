@@ -5,7 +5,7 @@ import Tag from './tag.js';
 export default class BookTag extends Model {
     static init(sequelize) {
         super.init({   
-            bookId: {
+            /*bookId: {
                 type: DataTypes.STRING,
                 references: {
                     model: Book,
@@ -20,7 +20,7 @@ export default class BookTag extends Model {
                     key: 'id'
                 },
                 allowNull: false
-            },
+            },*/
         },
         {
             sequelize,

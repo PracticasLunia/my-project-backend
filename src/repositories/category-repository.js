@@ -3,7 +3,7 @@ import Category from "../models/mysql/category.js";
 export default class CategoryRepository {
     static async get(id) {
         try {
-            return await Category.findByPk(id, { raw: true });
+            return await Category.findByPk(id);
         } catch (err) {
             throw new Error("Error while finding category")
         }
@@ -11,7 +11,7 @@ export default class CategoryRepository {
 
     static async create(category) {
         try {
-            return (await Category.create(category, {raw: true})).dataValues;
+            return (await Category.create(category));
         } catch (err) {
             throw new Error("Some field is wrong or category already exists")
         }
@@ -35,7 +35,7 @@ export default class CategoryRepository {
 
     static async getAll() {
         try {
-            return await Category.findAll({raw: true});
+            return await Category.findAll();
         } catch (err) {
             throw new Error("Error while getting categories")
         }

@@ -18,7 +18,7 @@ describe('Tests for Book Create Controller', () => {
             return [];
         });
 
-        await BookCreateService.create(1, { title: "test"} );
+        const books = await BookCreateService.create(1, {title: "data", tags: []} );
         expect(BookRepository.create).toBeCalled();
     });
 
@@ -27,7 +27,7 @@ describe('Tests for Book Create Controller', () => {
             return 1;
         });
 
-        const books = await BookCreateService.create(1, {title: "data"} );
+        const books = await BookCreateService.create(1, {title: "data", tags: []} );
         expect(books).toStrictEqual(1);
     });
 

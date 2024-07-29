@@ -11,7 +11,7 @@ export default async function verifyJWT(req, res, next) {
 
     try {
         let decoded = jwt.verify(token, process.env.JWT_SECRET);
-        res.locals.user = await UserRepository.get(decoded.id);
+        res.locals.user = (await UserRepository.get(decoded.id)).dataValues;
         next();
     } catch (err) {
         return res.status(401).json({ auth: false, message: 'Token expired' });

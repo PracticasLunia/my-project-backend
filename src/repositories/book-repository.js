@@ -1,12 +1,13 @@
 import Book from "../models/mysql/book.js";
 import Sequelize from 'sequelize'
+import Tag from "../models/mysql/tag.js";
 const Op = Sequelize.Op
 
 
 export default class BookRepository {
     static async get(isbn) {
         try {
-            return await Book.findByPk(isbn, { raw: true });
+            return await Book.findByPk(isbn, { include: Tag });
         } catch (err) {
             throw new Error("Error while finding book")
         }
@@ -14,7 +15,7 @@ export default class BookRepository {
 
     static async create(book) {
         try {
-            return (await Book.create(book, {raw: true})).dataValues;
+            return (await Book.create(book));
         } catch (err) {
             throw new Error("Some field is wrong or book with isbn already exists")
         }
@@ -41,7 +42,7 @@ export default class BookRepository {
             return await Book.findAll({ where: { 
                 title: {[Op.like]: `%${title}%`},
                 author: {[Op.like]: `%${author}%`}
-            }, raw: true });
+            }});
         } catch (err) {
             throw new Error("Error while finding books")
         }

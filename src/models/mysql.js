@@ -30,10 +30,13 @@ if(process.env.NODE_ENV !== 'test'){
         Tag.init(sequelize);
         Book.init(sequelize);
         BookTag.init(sequelize);
+
+        Book.belongsToMany(Tag, {through: BookTag});
+        Tag.belongsToMany(Book, {through: BookTag});
     
-        //Book.sync({ force: true })
         //await sequelize.sync({ force: true });
     } catch (error) {
+        console.error(error);
         console.error("Error connecting to the database");
     }
 }

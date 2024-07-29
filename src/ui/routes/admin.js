@@ -14,6 +14,11 @@ import CategoryGetController from '../controllers/category/category-get-controll
 import CategoryCreateController from '../controllers/category/category-create-controller.js';
 import CategoryDeleteController from '../controllers/category/category-delete-controller.js';
 import CategoryUpdateController from '../controllers/category/category-update-controller.js';
+import TagGetAllController from '../controllers/tag/tag-getAll-controller.js';
+import TagGetController from '../controllers/tag/tag-get-controller.js';
+import TagCreateController from '../controllers/tag/tag-create-controller.js';
+import TagDeleteController from '../controllers/tag/tag-delete-controller.js';
+import TagUpdateController from '../controllers/tag/tag-update-controller.js';
 
 let router = express.Router();
 
@@ -35,5 +40,11 @@ router.get('/category/:id', CategoryGetController.get)
 router.post('/category-create', CategoryCreateController.create)
 router.delete('/category-delete/:id', CategoryDeleteController.delete)
 router.post('/category-update/:id', CategoryUpdateController.update)
+
+router.get('/tags', TagGetAllController.getAll)
+router.get('/tag/:id', TagGetController.get)
+router.post('/tag-create', TagCreateController.create)
+router.delete('/tag-delete/:id', TagDeleteController.delete)
+router.post('/tag-update/:id', TagUpdateController.update)
 
 export default router;

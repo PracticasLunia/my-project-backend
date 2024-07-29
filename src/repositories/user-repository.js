@@ -6,7 +6,7 @@ const Op = Sequelize.Op
 export default class UserRepository {
     static async get(id) {
         try {
-            return await User.findByPk(id, { raw: true });
+            return await User.findByPk(id);
         } catch (err) {
             throw new Error("Error while finding user")
         }
@@ -14,7 +14,7 @@ export default class UserRepository {
 
     static async getByEmail(email) {
         try {
-            return await User.findOne({ where: { email: email }, raw: true });
+            return await User.findOne({ where: { email: email }});
         } catch (err) {
             throw new Error("Error while finding user")
         }
@@ -22,7 +22,7 @@ export default class UserRepository {
 
     static async create(user) {
         try {
-            return (await User.create(user, {raw: true})).dataValues;
+            return (await User.create(user));
         } catch (err) {
             throw new Error("Some field is wrong or user with email already exists")
         }
@@ -49,7 +49,7 @@ export default class UserRepository {
             return await User.findAll({ where: { 
                 name: {[Op.like]: `%${name}%`},
                 email: {[Op.like]: `%${email}%`}
-            }, raw: true });
+            }});
         } catch (err) {
             throw new Error("Error while finding users")
         }

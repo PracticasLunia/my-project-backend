@@ -3,7 +3,7 @@ import Tag from "../models/mysql/tag.js";
 export default class TagRepository {
     static async get(id) {
         try {
-            return await Tag.findByPk(id, { raw: true });
+            return await Tag.findByPk(id);
         } catch (err) {
             throw new Error("Error while finding tag")
         }
@@ -11,7 +11,7 @@ export default class TagRepository {
 
     static async create(tag) {
         try {
-            return (await Tag.create(tag, {raw: true})).dataValues;
+            return (await Tag.create(tag));
         } catch (err) {
             throw new Error("Some field is wrong or tag already exists")
         }
@@ -30,6 +30,14 @@ export default class TagRepository {
             return await Tag.destroy({ where: { id: id } });
         } catch (err) {
             throw new Error("Error while deleting tag")
+        }
+    }
+
+    static async getAll() {
+        try {
+            return await Tag.findAll();
+        } catch (err) {
+            throw new Error("Error while getting categories")
         }
     }
 }
