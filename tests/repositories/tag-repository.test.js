@@ -8,6 +8,7 @@ describe('Tests for Tag Find Controller', () => {
         Tag.create = jest.fn(() => { return {}; });
         Tag.destroy = jest.fn(() => { return 1; });
         Tag.update = jest.fn(() => { return {}; });
+        Tag.findAll = jest.fn(() => { return [{}]; });
     });
 
     beforeEach(() => {
@@ -15,6 +16,7 @@ describe('Tests for Tag Find Controller', () => {
         Tag.create.mockClear();
         Tag.destroy.mockClear();
         Tag.update.mockClear();
+        Tag.findAll.mockClear();
     });
 
     test('All methods should use Tag Model', async () => {
@@ -22,11 +24,13 @@ describe('Tests for Tag Find Controller', () => {
         TagRepository.create({});
         TagRepository.delete(1);
         TagRepository.update(1, {});
+        TagRepository.getAll();
 
         expect(Tag.findByPk).toBeCalled();
         expect(Tag.create).toBeCalled();
         expect(Tag.destroy).toBeCalled();
         expect(Tag.update).toBeCalled();
+        expect(Tag.findAll).toBeCalled();
     });
 
     test('All methods throw an error if Tag model fails', async () => {
@@ -34,6 +38,7 @@ describe('Tests for Tag Find Controller', () => {
         Tag.create.mockImplementation(() => { throw new Error(""); });
         Tag.destroy.mockImplementation(() => { throw new Error(""); });
         Tag.update.mockImplementation(() => { throw new Error(""); });
+        Tag.findAll.mockImplementation(() => { throw new Error(""); });
 
         try {
             await TagRepository.get(1);
@@ -61,6 +66,13 @@ describe('Tests for Tag Find Controller', () => {
             expect(true).toBe(false);
         } catch (err) {
             expect(err.message).toBe("Error while updating tag");
+        }
+
+        try {
+            await TagRepository.getAll();
+            expect(true).toBe(false);
+        } catch (err) {
+            expect(err.message).toBe("Error while getting tags");
         }
     });
 });

@@ -26,11 +26,13 @@ describe('Tests for User Login Controller', () => {
         const req = mockRequest({ body: { name: '', email: ''}});
         const res = mockResponse();
         const user = {
-            id: 1,
-            name: "a",
-            email: "a@a.a",
-            password: "a",
-            admin: false,
+            dataValues: {
+                id: 1,
+                name: "a",
+                email: "a@a.a",
+                password: "a",
+                admin: false,
+            }
         }
         UserLoginService.login.mockResolvedValue(user)
 
@@ -42,11 +44,13 @@ describe('Tests for User Login Controller', () => {
         const req = mockRequest();
         const res = mockResponse();
         const user = {
-            id: 1,
-            name: "a",
-            email: "a@a.a",
-            password: "a",
-            admin: false,
+            dataValues: {
+                id: 1,
+                name: "a",
+                email: "a@a.a",
+                password: "a",
+                admin: false,
+            }
         }
 
         UserLoginService.login.mockResolvedValue(user)

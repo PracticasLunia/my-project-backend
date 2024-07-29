@@ -1,5 +1,6 @@
 import BookTag from "../../models/mysql/book-tag.js";
 import BookRepository from "../../repositories/book-repository.js";
+import BookTagRepository from "../../repositories/book-tag-repository.js";
 import TagRepository from "../../repositories/tag-repository.js";
 
 export default class BookUpdateService {
@@ -14,8 +15,7 @@ export default class BookUpdateService {
             throw error;
         }
         const book = await BookRepository.get(isbn);
-        const actualTags = (await BookRepository.get(isbn)).dataValues.Tags;
-
+        const actualTags = book.dataValues.Tags;
         for (const tag of tags){
             let included = false;
             for(const actTag of actualTags){
@@ -23,8 +23,7 @@ export default class BookUpdateService {
                     included = true;
             }
             if (!included){
-                const createTag = await TagRepository.get(tag.id);
-                await book.addTag(createTag);
+                await BookTagRepository.create({ BookIsbn: book.dataValues.isbn, TagId: tag.id})
             }
         }
         for (const actTag of actualTags){
@@ -34,7 +33,7 @@ export default class BookUpdateService {
                     included = true;
             }
             if (!included){
-                await BookTag.destroy({ where: { BookIsbn: isbn, TagId: actTag.dataValues.id } })
+                await BookTagRepository.delete(isbn, actTag.dataValues.id)
             }
         }
         return updated;

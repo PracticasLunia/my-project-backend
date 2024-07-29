@@ -2,6 +2,10 @@ import { DataTypes, Model } from "sequelize";
 import Category from "./category.js";
 
 export default class Book extends Model {
+    addTag() {
+        
+    }
+
     static init(sequelize) {
         super.init({   
             title: {

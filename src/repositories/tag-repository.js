@@ -37,7 +37,7 @@ export default class TagRepository {
         try {
             return await Tag.findAll();
         } catch (err) {
-            throw new Error("Error while getting categories")
+            throw new Error("Error while getting tags")
         }
     }
 }

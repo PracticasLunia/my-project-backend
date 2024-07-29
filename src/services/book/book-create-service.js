@@ -1,5 +1,5 @@
 import BookRepository from "../../repositories/book-repository.js";
-import TagRepository from "../../repositories/tag-repository.js";
+import BookTagRepository from "../../repositories/book-tag-repository.js";
 
 export default class BookCreateService {
     static async create(data){
@@ -12,9 +12,8 @@ export default class BookCreateService {
             error.message = "Can't create the book data";
             throw error;
         }
-        for(const tagId of tags){
-            const tag = await TagRepository.get(tagId);
-            await created.addTag(tag);
+        for (const tag of tags){
+            await BookTagRepository.create({ BookIsbn: created.dataValues.isbn, TagId: tag.id})
         }
         return created;
     }
