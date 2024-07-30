@@ -19,6 +19,7 @@ import TagGetController from '../controllers/tag/tag-get-controller.js';
 import TagCreateController from '../controllers/tag/tag-create-controller.js';
 import TagDeleteController from '../controllers/tag/tag-delete-controller.js';
 import TagUpdateController from '../controllers/tag/tag-update-controller.js';
+import BookImportController from '../controllers/book/book-import-controller.js';
 
 let router = express.Router();
 
@@ -32,6 +33,7 @@ router.get('/user-verify/:id', UserVerifyController.verify)
 router.post('/book', BookFindController.find)
 router.get('/book/:isbn', BookGetController.get)
 router.post('/book-create', BookCreateController.create)
+router.post('/book-import', BookImportController.import)
 router.delete('/book-delete/:isbn', BookDeleteController.delete)
 router.post('/book-update/:isbn', BookUpdateController.update)
 

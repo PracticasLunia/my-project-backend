@@ -15,7 +15,7 @@ export default class BookRepository {
 
     static async create(book) {
         try {
-            return (await Book.create(book));
+            return (await Book.create(book, {include: Tag}));
         } catch (err) {
             throw new Error("Some field is wrong or book with isbn already exists")
         }

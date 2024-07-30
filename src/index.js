@@ -9,10 +9,12 @@ import corsOptions from './middlewares/cors.js';
 import isAdmin from './middlewares/admin.js';
 import isVerified from './middlewares/verified.js';
 import './models/mysql.js' 
+import fileUpload from 'express-fileupload';
 
 const app = express();
 app.disable("x-powered-by");
 app.use(express.json());
+app.use(fileUpload());
 const port = process.env.APP_PORT | 3000;
 
 app.options('*', cors(corsOptions));

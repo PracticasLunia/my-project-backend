@@ -2,10 +2,6 @@ import { DataTypes, Model } from "sequelize";
 import Category from "./category.js";
 
 export default class Book extends Model {
-    addTag() {
-        
-    }
-
     static init(sequelize) {
         super.init({   
             title: {
@@ -38,8 +34,14 @@ export default class Book extends Model {
                 allowNull: false
             },
             description: {
-                type: DataTypes.STRING,
-                allowNull: false
+                type: DataTypes.TEXT,
+                allowNull: false,
+                defaultValue: ""
+            },
+            summary: {
+                type: DataTypes.TEXT,
+                allowNull: false,
+                defaultValue: ""
             },
             pageCount: {
                 type: DataTypes.INTEGER,
