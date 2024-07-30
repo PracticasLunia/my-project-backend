@@ -13,7 +13,7 @@ describe('Tests for Tag Delete Controller', () => {
     });
 
     test('Shoud call Tag Delete Service', async () => {
-        const req = mockRequest({ body: { isbn: ''}});
+        const req = mockRequest({ body: { id: 1 }});
         const res = mockResponse();
 
         await TagDeleteController.delete(req, res);
@@ -21,7 +21,7 @@ describe('Tests for Tag Delete Controller', () => {
     });
 
     test('Should return code 200 on response ', async () => {
-        const req = mockRequest({ body: { isbn: ''}});
+        const req = mockRequest({ body: { id: 1 }});
         const res = mockResponse();
         TagDeleteService.delete.mockImplementation(() => {
             return [1];

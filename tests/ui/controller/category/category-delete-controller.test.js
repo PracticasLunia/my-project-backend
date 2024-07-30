@@ -13,7 +13,7 @@ describe('Tests for Category Delete Controller', () => {
     });
 
     test('Shoud call Category Delete Service', async () => {
-        const req = mockRequest({ body: { isbn: ''}});
+        const req = mockRequest({ body: { id: 1}});
         const res = mockResponse();
 
         await CategoryDeleteController.delete(req, res);
@@ -21,7 +21,7 @@ describe('Tests for Category Delete Controller', () => {
     });
 
     test('Should return code 200 on response ', async () => {
-        const req = mockRequest({ body: { isbn: ''}});
+        const req = mockRequest({ body: { id: 1}});
         const res = mockResponse();
         CategoryDeleteService.delete.mockImplementation(() => {
             return [1];
