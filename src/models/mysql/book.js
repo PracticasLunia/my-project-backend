@@ -48,7 +48,7 @@ export default class Book extends Model {
                 allowNull: false
             },
             coverImage: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: false
             },
             format: {

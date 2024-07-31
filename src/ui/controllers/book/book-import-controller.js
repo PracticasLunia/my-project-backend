@@ -1,10 +1,16 @@
 import BookImportService from "../../../services/book/book-import-service.js";
+import BookCoverService from "../../../services/book/book-cover-service.js";
+import PdfReaderService from "../../../services/pdf-reader-service.js";
+import BookVectorStoreService from "../../../services/book/book-vectorStore-service.js";
 
 export class BookImportController {
     static  async import(req, res){
         try{
             const { file } = req.files;
-            const response = await BookImportService.import(file);
+            const docs = await PdfReaderService.read(file);
+            let response = await BookImportService.import(docs);
+            response = await BookCoverService.cover(response);
+            await BookVectorStoreService.store(response, docs);
             res.status(200).json(response);
         } catch (err){
             res.status(err.status || 400).json({ error: err.message })

@@ -17,10 +17,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@azure/identity": "^4.4.0",
+    "@azure/openai": "^2.0.0-beta.1",
     "@langchain/community": "^0.2.21",
     "@langchain/core": "^0.2.18",
     "@langchain/openai": "^0.2.5",
     "bcrypt": "^5.1.1",
+    "chromadb": "^1.8.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
