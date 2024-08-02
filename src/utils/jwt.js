@@ -32,4 +32,21 @@ export default class JWTUtils {
             throw error;
         }
     };
+
+    static async validateToken(token){
+        if (!token) {
+            let error = new Error('No token provided');
+            error.status = 401;
+            throw error;
+        }
+    
+        try {
+            let decoded = jwt.verify(token, process.env.JWT_SECRET);
+            return decoded;
+        } catch (err) {
+            let error = new Error('Failed to authenticate token');
+            error.status = 401;
+            throw error;
+        }
+    }
 }

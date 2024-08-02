@@ -22,7 +22,6 @@ describe('Tests for Pdf Reader Service', () => {
 
     test('Should use Chroma && AzureOpenAIEmbeddings', async () => {
         const chroma = new Chroma();
-        console.log(chroma.delete)
     });
 
     test('Should use Chroma && AzureOpenAIEmbeddings', async () => {

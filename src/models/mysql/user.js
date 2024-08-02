@@ -33,6 +33,11 @@ export default class User extends Model {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false,
                 allowNull: false
+            },
+            preferences: {
+                type: DataTypes.TEXT,
+                defaultValue: "All kind of books",
+                allowNull: false
             }
         },
         {

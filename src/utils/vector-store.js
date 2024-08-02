@@ -9,5 +9,7 @@ const embeddings = new AzureOpenAIEmbeddings({
 const vectorStore = new Chroma(embeddings, {
     collectionName: "books-collection",
 });
+await vectorStore.ensureCollection();
+
 
 export default vectorStore;

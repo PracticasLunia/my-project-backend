@@ -3,7 +3,6 @@ import vectorStore from "../../utils/vector-store.js";
 export default class BookVectorStoreService {
     static async store(book, docs){
         try {
-            await vectorStore.ensureCollection();
             for (let doc of docs){
                 doc.metadata = book.dataValues;
             }

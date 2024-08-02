@@ -10,6 +10,7 @@ import isAdmin from './middlewares/admin.js';
 import isVerified from './middlewares/verified.js';
 import './models/mysql.js' 
 import fileUpload from 'express-fileupload';
+import './services/user/user-send-verify-mail-service.js'
 
 const app = express();
 app.disable("x-powered-by");

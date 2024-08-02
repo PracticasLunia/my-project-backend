@@ -9,13 +9,13 @@ import BookRepository from "../../repositories/book-repository.js";
 export default class BookVectorSearchService {
     static async search(description){
         try {
-            await vectorStore.ensureCollection();
             if (description === ''){
                 description = "I want to know about everything"
             }
 
             const multyQueryRetriever = await MultiQueryRetriever.fromLLM({
                 llm: llm,
+                queryCount: 5,
                 retriever: vectorStore.asRetriever(),
                 searchType: "similarity",
             });
@@ -37,7 +37,6 @@ export default class BookVectorSearchService {
             
             return books;
         } catch (err){
-            console.log(err)
             const error = new Error("Can't search the book in the vector store")
             error.status = 400;
             throw error;
