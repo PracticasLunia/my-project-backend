@@ -12,7 +12,7 @@ describe('Tests for User Verify Controller', () => {
         UserVerifyService.verify.mockClear();
     });
 
-    test('Shoud call User Find Service', async () => {
+    test('Shoud call User Verify Service', async () => {
         const req = mockRequest({ body: { name: '', email: ''}});
         const res = mockResponse();
 

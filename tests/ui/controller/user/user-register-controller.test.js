@@ -3,23 +3,30 @@ import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globa
 import { mockRequest, mockResponse } from 'jest-mock-req-res';
 import UserRegisterService from '../../../../src/services/user/user-register-service.js';
 import UserRegisterController from '../../../../src/ui/controllers/user/user-register-controller.js'
+import UserGeneratePreferencesService from '../../../../src/services/user/user-generate-preferences-service.js';
+import UserSendVerifyMailService from '../../../../src/services/user/user-send-verify-mail-service.js';
 
 describe('Tests for User Register Controller', () => {
     beforeAll(() => {
         UserRegisterService.register = jest.fn(UserRegisterService.register);
+        UserGeneratePreferencesService.generate = jest.fn(() => { return "test" });
+        UserSendVerifyMailService.send = jest.fn(() => { return void 1 });
         jwt.sign = jest.fn(() => { return 'test-token' });
     });
 
     beforeEach(() => {
         UserRegisterService.register.mockClear();
+        UserGeneratePreferencesService.generate.mockClear();
+        UserSendVerifyMailService.send.mockClear();
     });
 
-    test('Shoud call User Register Service', async () => {
+    test('Shoud call User Register Service, User Generate Preferences Service & User Send Mail Service', async () => {
         const req = mockRequest({ body: { name: '', email: ''}});
         const res = mockResponse();
 
         await UserRegisterController.register(req, res);
         expect(UserRegisterService.register).toBeCalled();
+        expect(UserGeneratePreferencesService.generate).toBeCalled();
     });
 
     test('Should return code 200 on response ', async () => {

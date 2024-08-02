@@ -23,12 +23,12 @@ describe('Tests for Book Update Controller', () => {
     });
 
     beforeEach(() => {
+        JSON.parse.mockClear();
         BookUpdateService.update.mockClear();
         PdfReaderService.read.mockClear();
         BookGetService.get.mockClear();
         BookVectorDeleteService.delete.mockClear();
         BookVectorStoreService.store.mockClear();
-
     });
 
     test('Shoud call Book Find Service', async () => {

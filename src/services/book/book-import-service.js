@@ -3,12 +3,21 @@ import { loadSummarizationChain } from "langchain/chains";
 import { PromptTemplate } from "@langchain/core/prompts";
 import BookRepository from "../../repositories/book-repository.js";
 import bookSchema from  '../../schemas/book.js'
-import llm from "../../utils/llm.js";
 import ISBN from "../../utils/isbn.js";
+import { AzureChatOpenAI } from "@langchain/openai";
 
 export default class BookImportService {
     static async import(docs){
         try {
+            const llm = new AzureChatOpenAI({
+                azureOpenAIApiKey: process.env['AZURE_OPENAI_API_KEY'] || 'TEST_API_KEY',
+                azureOpenAIApiInstanceName: process.env['AZURE_OPENAI_MODEL'] || "gpt-35-turbo",
+                azureOpenAIApiVersion: process.env['AZURE_OPENAI_API_VERSION'] || "v-test",
+                azureOpenAIApiDeploymentName: process.env['AZURE_OPENAI_DEPLOYMENT_NAME'] || "gpt-35-turbo",
+                temperature: 0.7,
+                azureOpenAIBasePath: "https://gpt-usa-02.openai.azure.com/openai/deployments",
+            });
+
             /* GET USED ISBN */
             const books = await BookRepository.findAll()
             let isbns = ''
@@ -98,14 +107,14 @@ export default class BookImportService {
             const created = await BookRepository.create(result);
             if(!created || created[0] === 0){
                 const error = new Error();
-                error.status = 400;
+                error.status = 500;
                 error.message = "Can't create the book data";
                 throw error;
             }
             return created;
         } catch (err) {
-            const error = new Error("Failed to import book: " + err.message);
-            error.status = 400;
+            const error = new Error("Failed to create the book: " + err.message);
+            error.status = 500;
             throw error;
         }
     }

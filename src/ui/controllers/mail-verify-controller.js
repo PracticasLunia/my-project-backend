@@ -6,12 +6,8 @@ export class MailVerifyController {
         try{
             const { token } = req.params;
             const validated = await JWTUtils.validateToken(token);
-            if (validated){
-                const response = await UserVerifyService.verify(validated.id);
-                res.status(200).json(response);
-            } else {
-                res.status(401).json({ auth: false });
-            }
+            const response = await UserVerifyService.verify(validated.id);
+            res.status(200).json(response);
         } catch (err){
             res.status(err.status || 400).json({ error: err.message })
         }

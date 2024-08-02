@@ -1,5 +1,4 @@
 import BookVectorSearchService from "../../../services/book/book-vector-search-service.js";
-import UserGetService from "../../../services/user/user-get-service.js";
 
 export class BookVectorPreferencesController {
     static  async preferences(req, res){
