@@ -8,11 +8,14 @@ export default class BookUpdateService {
         const tags = data['Tags'];
         delete data['Tags'];
         const updated = await BookRepository.update(isbn, data);
-        if(!updated || updated[0] === 0){
+        if(!updated){
             const error = new Error();
             error.status = 400;
             error.message = "Can't update the book data";
             throw error;
+        }
+        if (data.isbn !== isbn){
+            isbn = data.isbn
         }
         const book = await BookRepository.get(isbn);
         const actualTags = book.dataValues.Tags;

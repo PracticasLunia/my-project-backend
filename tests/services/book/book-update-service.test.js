@@ -40,7 +40,7 @@ describe('Tests for Book Update Controller', () => {
             return 1;
         });
 
-        const books = await BookUpdateService.update(1, {title: "data", Tags: []} );
+        const books = await BookUpdateService.update(1, { isbn: 2, title: "data", Tags: []} );
         expect(books).toStrictEqual(1);
     });
 
@@ -58,7 +58,7 @@ describe('Tests for Book Update Controller', () => {
         });
 
 
-        let books = await BookUpdateService.update(1, {title: "data", Tags: [1, 2]} );
+        let books = await BookUpdateService.update(1, { isbn: 1, title: "data", Tags: [1, 2]} );
         expect(BookTagRepository.create).toBeCalledTimes(2);
 
         BookRepository.get.mockImplementation(() => {

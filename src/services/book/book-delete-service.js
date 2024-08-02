@@ -1,8 +1,8 @@
 import BookRepository from "../../repositories/book-repository.js";
 
 export default class BookDeleteService {
-    static async delete(id){
-        const book = await BookRepository.delete(id);
+    static async delete(isbn){
+        const book = await BookRepository.delete(isbn);
         if(!book){
             const error = new Error();
             error.status = 400;

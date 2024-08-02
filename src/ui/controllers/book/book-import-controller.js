@@ -1,7 +1,7 @@
 import BookImportService from "../../../services/book/book-import-service.js";
 import BookCoverService from "../../../services/book/book-cover-service.js";
 import PdfReaderService from "../../../services/pdf-reader-service.js";
-import BookVectorStoreService from "../../../services/book/book-vectorStore-service.js";
+import BookVectorStoreService from "../../../services/book/book-vector-store-service.js";
 
 export class BookImportController {
     static  async import(req, res){

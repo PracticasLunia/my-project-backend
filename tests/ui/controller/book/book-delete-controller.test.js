@@ -2,14 +2,20 @@ import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globa
 import { mockRequest, mockResponse } from 'jest-mock-req-res';
 import BookDeleteService from '../../../../src/services/book/book-delete-service.js';
 import BookDeleteController from '../../../../src/ui/controllers/book/book-delete-controller.js'
+import BookGetService from '../../../../src/services/book/book-get-service.js';
+import BookVectorDeleteService from '../../../../src/services/book/book-vector-delete-service.js';
 
 describe('Tests for Book Delete Controller', () => {
     beforeAll(() => {
         BookDeleteService.delete = jest.fn(BookDeleteService.delete);
+        BookGetService.get = jest.fn(() => {return {}});
+        BookVectorDeleteService.delete = jest.fn(() => {return void 1})
     });
 
     beforeEach(() => {
         BookDeleteService.delete.mockClear();
+        BookGetService.get.mockClear();
+        BookVectorDeleteService.delete.mockClear();
     });
 
     test('Shoud call Book Delete Service', async () => {
