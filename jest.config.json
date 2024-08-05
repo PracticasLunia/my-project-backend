@@ -5,9 +5,8 @@
         "jest.config.json",
         "src/index.js",
         "src/ui/routes",
-        "src/models",
-        "src/utils/llm.js",
-        "src/utils/vector-store.js"
+        "src/models"
     ],
-    "coverageDirectory": "<rootDir>/coverage/"
+    "coverageDirectory": "<rootDir>/coverage/",
+    "transform": {}
 }

@@ -1,14 +1,33 @@
-import vectorStore from "../../utils/vector-store.js";
-import llm from "../../utils/llm.js";
 import { MultiQueryRetriever } from "langchain/retrievers/multi_query";
-import { ScoreThresholdRetriever } from "langchain/retrievers/score_threshold";
-import { SelfQueryRetriever } from "langchain/retrievers/self_query";
-import { ChromaTranslator } from "@langchain/community/structured_query/chroma";
 import BookRepository from "../../repositories/book-repository.js";
+import { AzureChatOpenAI, AzureOpenAIEmbeddings } from "@langchain/openai";
+import { Chroma } from "@langchain/community/vectorstores/chroma";
 
 export default class BookVectorSearchService {
     static async search(description){
         try {
+            const embeddings = new AzureOpenAIEmbeddings({
+                azureOpenAIApiKey: process.env['AZURE_OPENAI_API_KEY'] || 'TEST_API_KEY',
+                azureOpenAIApiInstanceName: process.env['AZURE_OPENAI_MODEL'] || "gpt-35-turbo",
+                azureOpenAIApiVersion: process.env['AZURE_OPENAI_API_VERSION'] || "v-test",
+                azureOpenAIApiEmbeddingsDeploymentName: process.env['AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME'] || "gpt-35-turbo",
+                azureOpenAIBasePath: "https://gpt-usa-02.openai.azure.com/openai/deployments",
+            },{});
+            
+            const vectorStore = new Chroma(embeddings, {
+                collectionName: "books-collection",
+            });
+            await vectorStore.ensureCollection();
+
+            const llm = new AzureChatOpenAI({
+                azureOpenAIApiKey: process.env['AZURE_OPENAI_API_KEY'] || 'TEST_API_KEY',
+                azureOpenAIApiInstanceName: process.env['AZURE_OPENAI_MODEL'] || "gpt-35-turbo",
+                azureOpenAIApiVersion: process.env['AZURE_OPENAI_API_VERSION'] || "v-test",
+                azureOpenAIApiDeploymentName: process.env['AZURE_OPENAI_DEPLOYMENT_NAME'] || "gpt-35-turbo",
+                temperature: 0.7,
+                azureOpenAIBasePath: "https://gpt-usa-02.openai.azure.com/openai/deployments",
+            });
+
             if (description === ''){
                 description = "I want to know about everything"
             }
@@ -37,8 +56,8 @@ export default class BookVectorSearchService {
             
             return books;
         } catch (err){
-            const error = new Error("Can't search the book in the vector store")
-            error.status = 400;
+            const error = new Error("Can't search books in the vector store")
+            error.status = 500;
             throw error;
         }
     }

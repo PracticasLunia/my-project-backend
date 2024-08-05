@@ -1,101 +1,74 @@
-import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globals';
-import BookImportService from '../../../src/services/book/book-import-service';
-import ISBN from '../../../src/utils/isbn.js';
-import BookRepository from '../../../src/repositories/book-repository.js';
+import { describe, test, expect, jest, beforeEach } from '@jest/globals';
+import BookRepository from "../../../src/repositories/book-repository.js";
+import BookImportService from '../../../src/services/book/book-import-service.js';
+import { ChatPromptTemplate, PromptTemplate } from '@langchain/core/prompts';
+import { AzureChatOpenAI } from '@langchain/openai';
+import { StuffDocumentsChain } from "langchain/chains";
 
-jest.unstable_mockModule('@langchain/openai', () => ({
-    AzureChatOpenAI: jest.fn()
-}));
-jest.unstable_mockModule('@langchain/community/document_loaders/fs/pdf', () => ({
-    PDFLoader: jest.fn()
-}));
-
-const { AzureChatOpenAI } = await import('@langchain/openai');
-const { PDFLoader } = await import('@langchain/community/document_loaders/fs/pdf');
-
-describe('BookImportService', () => {
+describe('Tests for Book Import Service', () => {
+    const RunMock = jest.fn().mockReturnValue('test');
     beforeAll(() => {
-        BookRepository.findAll = jest.fn(BookRepository.findAll)
-        BookRepository.create = jest.fn(BookRepository.create)
-    })
+        BookRepository.create = jest.fn().mockReturnValue({isbn: '1'});
+        BookRepository.findAll = jest.fn().mockReturnValue([{isbn: '3'}]);
+        AzureChatOpenAI.prototype.withStructuredOutput = jest.fn().mockReturnValue({});
+        ChatPromptTemplate.fromMessages = jest.fn().mockReturnValue({
+            pipe: jest.fn().mockReturnValue({
+                invoke: jest.fn().mockReturnValue({ isbn: '1', publicationDate: '2022-01-01' })
+            })
+        });
+        PromptTemplate.fromTemplate = jest.fn();
+        StuffDocumentsChain.prototype.run = RunMock;
+    });
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        BookRepository.create.mockClear();
+        BookRepository.findAll.mockClear();
+        AzureChatOpenAI.prototype.withStructuredOutput.mockClear();
+        ChatPromptTemplate.fromMessages.mockClear();
+        PromptTemplate.fromTemplate.mockClear();
+        RunMock.mockClear();
     });
 
-    it('should work', () => {
-        expect(1).toBe(1);
+    test('Should use AzureChat and invoke it to generate good results', async () => {
+        await BookImportService.import([{pageContent: 'test', metadata: {}}, {pageContent: 'test', metadata: {}}]);
+        expect(ChatPromptTemplate.fromMessages).toHaveBeenCalledTimes(2);
+        expect(RunMock).toHaveBeenCalled();
+        expect(BookRepository.create).toHaveBeenCalled();
     });
-    /*
-    it('should import book data successfully', async () => {
-        // Arrange
-        const mockBooks = [
-            { isbn: '1234567890' },
-            { isbn: '0987654321' }
-        ];
-        const mockFile = {
-            data: 'fake pdf data',
-            mimetype: 'application/pdf'
-        };
-        const mockDocs = [{ pageContent: 'fake page content' }];
-        const mockResult = {
-            title: 'Mock Title',
-            author: 'Mock Author',
-            isbn: '1111111111',
-            genre: 'Mock Genre',
-            publicationDate: '2023-07-31',
-            publisher: 'Mock Publisher',
-            language: 'English',
-            description: 'Mock Description',
-            summary: 'Mock Summary',
-            pageCount: 100,
-            coverImage: 'mock_cover_image_url',
-            format: 'Hardcover',
-            availability: 'In Stock',
-            category: null,
-            tags: ['mock', 'tags'],
-            averageRating: 4.5,
-            ratingCount: 10
-        };
 
-        BookRepository.create.mockResolvedValue([1]);
-        BookRepository.findAll.mockResolvedValue(mockBooks);
-        AzureChatOpenAI.mockImplementation(() => ({
-            withStructuredOutput: jest.fn().mockReturnThis({}),
-            invoke: jest.fn().mockResolvedValue(mockResult)
-        }));
-        PDFLoader.mockImplementation(() => ({
-            load: jest.fn().mockResolvedValue(mockDocs)
-        }));
-        // Act
-        const result = await BookImportService.import(mockFile);
-
-        // Assert
-        expect(BookRepository.findAll).toHaveBeenCalledTimes(1);
-        expect(PDFLoader).toHaveBeenCalledWith(expect.any(Blob), { splitPages: false });
-        expect(AzureChatOpenAI).toHaveBeenCalledWith({
-            temperature: 0.7,
-            azureOpenAIBasePath: "https://gpt-usa-02.openai.azure.com/openai/deployments"
+    test('Should use AzureChat and invoke it to generate bad results & correct them', async () => {
+        ChatPromptTemplate.fromMessages = jest.fn().mockReturnValue({
+            pipe: jest.fn().mockReturnValue({
+                invoke: jest.fn().mockReturnValue({ isbn: '', publicationDate: '' })
+            })
         });
-        expect(BookRepository.create).toHaveBeenCalledWith(expect.objectContaining({
-            title: 'Mock Title',
-            author: 'Mock Author',
-            isbn: '1111111111'
-        }));
-        expect(result).toEqual([1]);
+        await BookImportService.import([{pageContent: 'test', metadata: {}}, {pageContent: 'test', metadata: {}}]);
+        expect(ChatPromptTemplate.fromMessages).toHaveBeenCalledTimes(2);
+        expect(RunMock).toHaveBeenCalled();
+        expect(BookRepository.create).toHaveBeenCalled();;
     });
 
-    it('should throw an error if importing fails', async () => {
-        // Arrange
-        const mockFile = {
-            data: 'fake pdf data',
-            mimetype: 'application/pdf'
-        };
-        const errorMessage = 'Something went wrong';
+    test('Should throw error if something goes bad', async () => {
+        BookRepository.create = jest.fn().mockImplementation(() => {throw new Error('ERROR')});
 
-        BookRepository.findAll.mockImplementation(() => { throw new Error(errorMessage)});
+        try {
+            await BookImportService.import([{pageContent: 'test', metadata: {}}, {pageContent: 'test', metadata: {}}]);
+            expect(true).toBe(false);
+        } catch (err) {
+            expect(err.status).toBe(500);
+            expect(err.message).toBe("Failed to create the book: " + "ERROR");
+        }
+    });
 
-        // Act & Assert
-        await expect(BookImportService.import(mockFile)).rejects.toThrow(`Failed to import book: ${errorMessage}`);
-    });*/
+    test('Should throw error if creation fails', async () => {
+        BookRepository.create = jest.fn().mockImplementation(() => {return false});
+        
+        try {
+            await BookImportService.import([{pageContent: 'test', metadata: {}}, {pageContent: 'test', metadata: {}}]);
+            expect(true).toBe(false);
+        } catch (err) {
+            expect(err.status).toBe(500);
+            expect(err.message).toBe("Failed to create the book: " + "Can't create the book data");
+        }
+    });
 });

@@ -2,10 +2,7 @@ import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globa
 import { mockRequest, mockResponse } from 'jest-mock-req-res';
 import BookCreateService from '../../../../src/services/book/book-create-service.js';
 import BookCreateController from '../../../../src/ui/controllers/book/book-create-controller.js'
-import BookUpdateService from '../../../../src/services/book/book-update-service.js';
 import PdfReaderService from '../../../../src/services/pdf-reader-service.js';
-import BookGetService from '../../../../src/services/book/book-get-service.js';
-import BookVectorDeleteService from '../../../../src/services/book/book-vector-delete-service.js';
 import BookVectorStoreService from '../../../../src/services/book/book-vector-store-service.js';
 import BookCoverService from '../../../../src/services/book/book-cover-service.js';
 

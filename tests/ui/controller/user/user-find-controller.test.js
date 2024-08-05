@@ -1,7 +1,7 @@
 import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globals';
 import { mockRequest, mockResponse } from 'jest-mock-req-res';
-import UserFindService from '../../../../src/services/book/book-find-service.js';
-import UserFindController from '../../../../src/ui/controllers/book/book-find-controller.js'
+import UserFindService from '../../../../src/services/user/user-find-service.js';
+import UserFindController from '../../../../src/ui/controllers/user/user-find-controller.js'
 
 describe('Tests for User Find Controller', () => {
     beforeAll(() => {

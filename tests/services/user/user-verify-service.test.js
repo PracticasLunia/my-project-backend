@@ -2,7 +2,7 @@ import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globa
 import UserVerifyService from '../../../src/services/user/user-verify-service';
 import UserRepository from '../../../src/repositories/user-repository';
 
-describe('Tests for User Verify Controller', () => {
+describe('Tests for User Verify Service', () => {
     beforeAll(() => {
         UserRepository.update = jest.fn(UserRepository.update);
     });

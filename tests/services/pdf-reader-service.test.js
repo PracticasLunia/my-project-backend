@@ -1,38 +1,25 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
 import PdfReaderService from '../../src/services/pdf-reader-service.js';
+import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
+import { TokenTextSplitter } from '@langchain/textsplitters';
 
-jest.unstable_mockModule('@langchain/community/document_loaders/fs/pdf', () => ({
-    PDFLoader: jest.fn().mockImplementation(() => ({
-        load: jest.fn().mockResolvedValue([{ pageContent: "This is a sample text." }]) // Devuelve un array con un objeto que contiene texto
-    }))
-}));
-
-jest.unstable_mockModule('node:buffer', () => ({
-    Blob: jest.fn().mockImplementation((data, options) => ({})) // Devuelve un objeto vacío
-}));
-
-jest.unstable_mockModule('@langchain/textsplitters', () => ({
-    TokenTextSplitter: jest.fn().mockImplementation(() => ({
-        splitDocuments: jest.fn().mockResolvedValue(['chunk1', 'chunk2']) // Devuelve un array de chunks
-    }))
-}));
-
-const { PDFLoader } = await import('@langchain/community/document_loaders/fs/pdf');
-const { TokenTextSplitter } = await import('@langchain/textsplitters');
-const { Blob } = await import('node:buffer');
 
 describe('Tests for Pdf Reader Service', () => {
-    beforeEach(() => {
-        PDFLoader.mockClear();
-        TokenTextSplitter.mockClear();
-        Blob.mockClear();
+    beforeAll(() => {
+        PDFLoader.prototype.load = jest.fn();
+        TokenTextSplitter.prototype.splitDocuments = jest.fn().mockResolvedValue(['chunk1', 'chunk2']);
     });
 
+    beforeEach(() => {
+        PDFLoader.prototype.load.mockClear();
+        TokenTextSplitter.prototype.splitDocuments.mockClear();
+    });
+    
     test('Should use PDFLoader && TokenTextSplitter and return the splitter return', async () => {
         const uploadedFile = {
             name: "sample.pdf",
             mv: jest.fn().mockImplementation((path, callback) => {
-                callback(null); // Simula una llamada exitosa
+                callback(null);
             }),
             encoding: "7bit",
             mimetype: "application/pdf",
@@ -44,19 +31,16 @@ describe('Tests for Pdf Reader Service', () => {
         };
 
         const result = await PdfReaderService.read(uploadedFile);
-        expect(PDFLoader).toBeCalled();
-        expect(TokenTextSplitter).toBeCalled();
+        expect(PDFLoader.prototype.load).toBeCalled();
+        expect(TokenTextSplitter.prototype.splitDocuments).toBeCalled();
         expect(result).toEqual(['chunk1', 'chunk2']);
     });
 
     test('Should throw error if PDFLoader not returns the pdf', async () => {
-        PDFLoader.mockImplementation(() => ({
-            load: jest.fn().mockImplementation(() => {
-                const err = new Error("Failed reading pdf");
-                throw err;
-            })
-        }));
-        
+        PDFLoader.prototype.load = jest.fn().mockImplementation(() => {
+            const err = new Error("Failed reading pdf");
+            throw err;
+        });
         try {
             await PdfReaderService.read({ data: "test", mimetype: "test" });
             expect(true).toBe(false);
