@@ -34,6 +34,11 @@ export default class User extends Model {
                 defaultValue: false,
                 allowNull: false
             },
+            description: {
+                type: DataTypes.TEXT,
+                defaultValue: "",
+                allowNull: false
+            },
             preferences: {
                 type: DataTypes.TEXT,
                 defaultValue: "All kind of books",

@@ -7,6 +7,8 @@ import BookGetService from '../../../../src/services/book/book-get-service.js';
 import PdfReaderService from '../../../../src/services/pdf-reader-service.js';
 import BookVectorDeleteService from '../../../../src/services/book/book-vector-delete-service.js';
 import BookVectorStoreService from '../../../../src/services/book/book-vector-store-service.js';
+import BookFileDeleteService from '../../../../src/services/book/book-file-delete-service.js';
+import BookFileSaveService from '../../../../src/services/book/book-file-save-service.js';
 
 describe('Tests for Book Update Controller', () => {
     beforeAll(() => {
@@ -20,6 +22,8 @@ describe('Tests for Book Update Controller', () => {
         });
         BookVectorDeleteService.delete = jest.fn(() => {})
         BookVectorStoreService.store = jest.fn(() => {})
+        BookFileDeleteService.delete = jest.fn(() => {})
+        BookFileSaveService.save = jest.fn(() => {})
     });
 
     beforeEach(() => {
@@ -29,6 +33,8 @@ describe('Tests for Book Update Controller', () => {
         BookGetService.get.mockClear();
         BookVectorDeleteService.delete.mockClear();
         BookVectorStoreService.store.mockClear();
+        BookFileDeleteService.delete.mockClear();
+        BookFileSaveService.save.mockClear();
     });
 
     test('Shoud call Book Find Service', async () => {

@@ -4,18 +4,21 @@ import BookDeleteService from '../../../../src/services/book/book-delete-service
 import BookDeleteController from '../../../../src/ui/controllers/book/book-delete-controller.js'
 import BookGetService from '../../../../src/services/book/book-get-service.js';
 import BookVectorDeleteService from '../../../../src/services/book/book-vector-delete-service.js';
+import BookFileDeleteService from '../../../../src/services/book/book-file-delete-service.js';
 
 describe('Tests for Book Delete Controller', () => {
     beforeAll(() => {
         BookDeleteService.delete = jest.fn(BookDeleteService.delete);
         BookGetService.get = jest.fn(() => {return {}});
-        BookVectorDeleteService.delete = jest.fn(() => {return void 1})
+        BookVectorDeleteService.delete = jest.fn(() => {return void 1});
+        BookFileDeleteService.delete = jest.fn(() => {})
     });
 
     beforeEach(() => {
         BookDeleteService.delete.mockClear();
         BookGetService.get.mockClear();
         BookVectorDeleteService.delete.mockClear();
+        BookFileDeleteService.delete.mockClear();
     });
 
     test('Shoud call Book Delete Service', async () => {

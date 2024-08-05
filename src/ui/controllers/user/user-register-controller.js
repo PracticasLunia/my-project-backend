@@ -8,11 +8,10 @@ export default class UserRegisterController {
         try{
             const data = req.body;
             const preferences = await UserGeneratePreferencesService.generate(data.description);
-            delete data['description'];
             data['preferences'] = preferences;
             const response = await UserRegisterService.register(data);
             const { token } = JWTUtils.generateAndSendTokens(response.dataValues, res);
-            UserSendVerifyMailService.send(token, response.dataValues.email);
+            UserSendVerifyMailService.send(token, response.dataValues);
             res.status(200).json(response);
         } catch (err){
             res.status(err.status || 400).json({ error: err.message })

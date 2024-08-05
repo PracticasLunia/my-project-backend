@@ -5,6 +5,7 @@ import BookImportController from '../../../../src/ui/controllers/book/book-impor
 import BookCoverService from '../../../../src/services/book/book-cover-service.js';
 import PdfReaderService from '../../../../src/services/pdf-reader-service.js';
 import BookVectorStoreService from '../../../../src/services/book/book-vector-store-service.js';
+import BookFileSaveService from '../../../../src/services/book/book-file-save-service.js';
 
 describe('Tests for Book Import Controller', () => {
     beforeAll(() => {
@@ -18,6 +19,7 @@ describe('Tests for Book Import Controller', () => {
             return [{ pageContent: 'fake page content', metadata: { isbn: '', title: '', author: ''} }];
         });
         BookVectorStoreService.store = jest.fn(() => {return void 1;})
+        BookFileSaveService.save = jest.fn(() => {})
     });
 
     beforeEach(() => {
@@ -25,6 +27,7 @@ describe('Tests for Book Import Controller', () => {
         BookCoverService.cover.mockClear();
         PdfReaderService.read.mockClear();
         BookVectorStoreService.store.mockClear();
+        BookFileSaveService.save.mockClear();
     });
 
     test('Shoud call Book Import Service, Book Cover Service & Pdf Reader Service', async () => {

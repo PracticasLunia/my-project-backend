@@ -5,6 +5,7 @@ import BookCreateController from '../../../../src/ui/controllers/book/book-creat
 import PdfReaderService from '../../../../src/services/pdf-reader-service.js';
 import BookVectorStoreService from '../../../../src/services/book/book-vector-store-service.js';
 import BookCoverService from '../../../../src/services/book/book-cover-service.js';
+import BookFileSaveService from '../../../../src/services/book/book-file-save-service.js';
 
 describe('Tests for Book Create Controller', () => {
     beforeAll(() => {
@@ -15,6 +16,7 @@ describe('Tests for Book Create Controller', () => {
             return { metadata: {} }
         });
         BookVectorStoreService.store = jest.fn(() => {})
+        BookFileSaveService.save = jest.fn(() => {})
     });
 
     beforeEach(() => {
@@ -23,6 +25,7 @@ describe('Tests for Book Create Controller', () => {
         BookCoverService.cover.mockClear();
         PdfReaderService.read.mockClear();
         BookVectorStoreService.store.mockClear();
+        BookFileSaveService.save.mockClear();
     });
 
     test('Shoud work', async () => {;

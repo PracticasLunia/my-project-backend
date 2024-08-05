@@ -5,15 +5,15 @@ export default class ISBN {
         let verlagsnr;
         let checksum;
 
-        const L1 = Math.random()*(10);
-        const L2 = Math.random()*(10);
+        let L1 = Math.random()*(10);
+        let L2 = Math.random()*(10);
 
-        const B1 = Math.random()*(10);
-        const B2 = Math.random()*(10);
-        const B3 = Math.random()*(10);
+        let B1 = Math.random()*(10);
+        let B2 = Math.random()*(10);
+        let B3 = Math.random()*(10);
 
-        const V1 = Math.random()*(10);
-        const V2 = Math.random()*(10);
+        let V1 = Math.random()*(10);
+        let V2 = Math.random()*(10);
 
         if(parseInt(L1) == 0 && parseInt(L2) == 0) {
             L2++;
@@ -24,7 +24,7 @@ export default class ISBN {
         if(parseInt(V1) == 0 && parseInt(V2) == 0) {
             V2++;
         }
-        const C = (ISBN.hashOp(parseInt(L1)) +L2 + ISBN.hashOp(parseInt(B1)) +B2 + ISBN.hashOp(parseInt(B3)) +V1 + ISBN.hashOp(parseInt(V2)))%10;
+        let C = (ISBN.hashOp(parseInt(L1)) +L2 + ISBN.hashOp(parseInt(B1)) +B2 + ISBN.hashOp(parseInt(B3)) +V1 + ISBN.hashOp(parseInt(V2)))%10;
 
         laendercode     = parseInt(L1)+""+parseInt(L2);
         bandnr          = parseInt(B1)+""+parseInt(B2)+""+parseInt(B3);

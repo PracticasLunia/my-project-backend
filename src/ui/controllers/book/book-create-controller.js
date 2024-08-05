@@ -2,6 +2,7 @@ import BookCreateService from "../../../services/book/book-create-service.js";
 import BookCoverService from "../../../services/book/book-cover-service.js";
 import PdfReaderService from "../../../services/pdf-reader-service.js";
 import BookVectorStoreService from "../../../services/book/book-vector-store-service.js";
+import BookFileSaveService from "../../../services/book/book-file-save-service.js";
 
 export class BookCreateController {
     static  async create(req, res){
@@ -12,6 +13,7 @@ export class BookCreateController {
             let response = await BookCreateService.create(book);
             response = await BookCoverService.cover(response);
             await BookVectorStoreService.store(response, docs);
+            BookFileSaveService.save(book.isbn + '.pdf', file);
             res.status(200).json(response);
         } catch (err){
             res.status(err.status || 400).json({ error: err.message })

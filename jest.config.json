@@ -8,5 +8,6 @@
         "src/models"
     ],
     "coverageDirectory": "<rootDir>/coverage/",
+    "restoreMocks": true,
     "transform": {}
 }

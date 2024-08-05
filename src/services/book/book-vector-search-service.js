@@ -8,9 +8,9 @@ export default class BookVectorSearchService {
         try {
             const embeddings = new AzureOpenAIEmbeddings({
                 azureOpenAIApiKey: process.env['AZURE_OPENAI_API_KEY'] || 'TEST_API_KEY',
-                azureOpenAIApiInstanceName: process.env['AZURE_OPENAI_MODEL'] || "gpt-35-turbo",
+                azureOpenAIApiInstanceName: process.env['AZURE_OPENAI_API_INSTANCE_NAME'] || "",
                 azureOpenAIApiVersion: process.env['AZURE_OPENAI_API_VERSION'] || "v-test",
-                azureOpenAIApiEmbeddingsDeploymentName: process.env['AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME'] || "gpt-35-turbo",
+                azureOpenAIApiEmbeddingsDeploymentName: process.env['AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME'] || "text-embedding-3-large",
                 azureOpenAIBasePath: "https://gpt-usa-02.openai.azure.com/openai/deployments",
             },{});
             
@@ -21,9 +21,9 @@ export default class BookVectorSearchService {
 
             const llm = new AzureChatOpenAI({
                 azureOpenAIApiKey: process.env['AZURE_OPENAI_API_KEY'] || 'TEST_API_KEY',
-                azureOpenAIApiInstanceName: process.env['AZURE_OPENAI_MODEL'] || "gpt-35-turbo",
+                azureOpenAIApiInstanceName: process.env['AZURE_OPENAI_API_INSTANCE_NAME'] || "gpt-35-turbo",
                 azureOpenAIApiVersion: process.env['AZURE_OPENAI_API_VERSION'] || "v-test",
-                azureOpenAIApiDeploymentName: process.env['AZURE_OPENAI_DEPLOYMENT_NAME'] || "gpt-35-turbo",
+                azureOpenAIApiDeploymentName: process.env['AZURE_OPENAI_API_DEPLOYMENT_NAME'] || "gpt-35-turbo",
                 temperature: 0.7,
                 azureOpenAIBasePath: "https://gpt-usa-02.openai.azure.com/openai/deployments",
             });
