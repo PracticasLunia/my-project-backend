@@ -1,7 +1,7 @@
-import UserVerifyService from "../../services/user/user-verify-service.js";
-import JWTUtils from "../../utils/jwt.js";
+import UserVerifyService from "../../../services/user/user-verify-service.js";
+import JWTUtils from "../../../utils/jwt.js";
 
-export class MailVerifyController {
+export class UserMailVerifyController {
     static  async verify(req, res){
         try{
             const { token } = req.params;
@@ -14,4 +14,4 @@ export class MailVerifyController {
     }
 }
 
-export default MailVerifyController
+export default UserMailVerifyController

@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon ./src/index.js",
     "testwin": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --config jest.config.json --no-cache",
-    "test": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --config jest.config.json --no-cache --runInBand",
+    "test": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --config jest.config.json --no-cache",
     "start": "node ./src/index.js"
   },
   "jest": {

@@ -2,11 +2,16 @@ import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 
 export default class JWTUtils {
+    static generateTokens(data) {
+        const token = jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const refreshToken = jwt.sign(data, process.env.JWT_REFRESH_SECRET, { expiresIn: '24h' });
+        return { token: token, refreshToken: refreshToken }
+    }
+
     static generateAndSendTokens(data, res) {
         delete data['iat'];
         delete data['exp'];
-        const token = jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '1h' });
-        const refreshToken = jwt.sign(data, process.env.JWT_REFRESH_SECRET, { expiresIn: '24h' });
+        const { token, refreshToken } = this.generateTokens(data);
         res.cookie('token', token, { httpOnly: false, path: '/', maxAge: 2 * 60 * 60 * 1000, secure: false, sameSite: 'strict' });
         res.cookie('refreshToken', refreshToken, { httpOnly: false, path: '/', maxAge: 24 * 60 * 60 * 1000, secure: false, sameSite: 'strict' });
         return {token: token, refreshToken: refreshToken}

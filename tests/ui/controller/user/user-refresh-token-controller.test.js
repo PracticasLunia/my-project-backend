@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken'
 import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globals';
 import { mockRequest, mockResponse } from 'jest-mock-req-res';
-import RefreshTokenController from '../../../src/ui/controllers/refresh-token-controller.js';
-import JWTUtils from '../../../src/utils/jwt.js';
+import UserRefreshTokenController from '../../../../src/ui/controllers/user/user-refresh-token-controller.js';
+import JWTUtils from '../../../../src/utils/jwt.js';
 
-describe('Tests for Refresh Token Controller', () => {
+describe('Tests for User Refresh Token Controller', () => {
     beforeAll(() => {
         jwt.sign = jest.fn(() => { return 'test-token' });
         jwt.verify = jest.fn(() => { return { id: 1, name: "test"} });
@@ -21,7 +21,7 @@ describe('Tests for Refresh Token Controller', () => {
         const req = mockRequest({ headers: { authorization: "Bearer test-token"}});
         const res = mockResponse();
 
-        await RefreshTokenController.refresh(req, res);
+        await UserRefreshTokenController.refresh(req, res);
         expect(JWTUtils.refreshTokens).toBeCalled();
     });
 
@@ -29,7 +29,7 @@ describe('Tests for Refresh Token Controller', () => {
         const req = mockRequest({ headers: { authorization: "Bearer test-token"}});
         const res = mockResponse();
 
-        await RefreshTokenController.refresh(req, res);
+        await UserRefreshTokenController.refresh(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
     });
 
@@ -38,7 +38,7 @@ describe('Tests for Refresh Token Controller', () => {
         const res = mockResponse();
         jwt.verify.mockImplementation(() => { return { token: "test-token", refreshToken: "test-token"} });
 
-        await RefreshTokenController.refresh(req, res);
+        await UserRefreshTokenController.refresh(req, res);
         expect(res.json).toBeCalledWith({ token: "test-token", refreshToken: "test-token"});
     });
 
@@ -49,7 +49,7 @@ describe('Tests for Refresh Token Controller', () => {
             const error = new Error("Something bad happened");
             throw error;
         });
-        await RefreshTokenController.refresh(req, res);
+        await UserRefreshTokenController.refresh(req, res);
 
         expect(res.status).toBeCalledWith(401);
         expect(res.json).toBeCalledWith({ error: 'Failed to authenticate refresh token' });
@@ -59,7 +59,7 @@ describe('Tests for Refresh Token Controller', () => {
         const req = mockRequest({ headers: { authorization: "Bearer"}});
         const res = mockResponse();
 
-        await RefreshTokenController.refresh(req, res);
+        await UserRefreshTokenController.refresh(req, res);
         expect(res.status).toBeCalledWith(401);
         expect(res.json).toBeCalledWith({ error: 'No refresh token provided' });
     });
@@ -68,7 +68,7 @@ describe('Tests for Refresh Token Controller', () => {
         const req = mockRequest({ headers: { authorization: ""}});
         const res = mockResponse();
 
-        await RefreshTokenController.refresh(req, res);
+        await UserRefreshTokenController.refresh(req, res);
         expect(res.status).toBeCalledWith(401);
         expect(res.json).toBeCalledWith({ error: 'No refresh token provided' });
     });
@@ -81,7 +81,7 @@ describe('Tests for Refresh Token Controller', () => {
             throw error;
         });
 
-        await RefreshTokenController.refresh(req, res);
+        await UserRefreshTokenController.refresh(req, res);
         expect(res.status).toBeCalledWith(400);
         expect(res.json).toBeCalledWith({ error: "Something bad happened" });
     });

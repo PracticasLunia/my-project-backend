@@ -1,6 +1,6 @@
-import JWTUtils from "../../utils/jwt.js";
+import JWTUtils from "../../../utils/jwt.js";
 
-export default class RefreshTokenController {
+export default class UserRefreshTokenController {
     static async refresh(req, res){
         try{
             const tokens = JWTUtils.refreshTokens(req, res);
