@@ -2,8 +2,15 @@ import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globa
 import BookFileDeleteService from '../../../src/services/book/book-file-delete-service.js';
 import fs from 'fs'
 
+let existsSync;
+let mkdirSync;
+let rmSync;
+
 describe('Tests for Book File Delete Controller', () => {
     beforeAll(() => {
+        existsSync = fs.existsSync;
+        mkdirSync = fs.mkdirSync;
+        rmSync = fs.rmSync;
         fs.existsSync = jest.fn(() => {return true})
         fs.mkdirSync = jest.fn(() => {})
         fs.rmSync = jest.fn(() => {})
@@ -48,8 +55,8 @@ describe('Tests for Book File Delete Controller', () => {
     });
 
     afterAll(() => {
-        fs.existsSync.mockRestore();
-        fs.mkdirSync.mockRestore();
-        fs.rmSync.mockRestore();
+        fs.existsSync = existsSync;
+        fs.mkdirSync = mkdirSync;
+        fs.rmSync = rmSync;
     });
 });

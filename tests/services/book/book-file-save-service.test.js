@@ -2,8 +2,15 @@ import { describe, test, expect, jest, beforeEach, beforeAll, afterAll } from '@
 import BookFileSaveService from '../../../src/services/book/book-file-save-service.js';
 import fs from 'fs'
 
+let existsSync;
+let mkdirSync;
+let writeFileSync;
+
 describe('Tests for Book File Save Controller', () => {
     beforeAll(() => {
+        existsSync = fs.existsSync;
+        mkdirSync = fs.mkdirSync;
+        writeFileSync = fs.writeFileSync;
         fs.existsSync = jest.fn(() => {return true})
         fs.mkdirSync = jest.fn(() => {})
         fs.writeFileSync = jest.fn(() => {})
@@ -48,8 +55,8 @@ describe('Tests for Book File Save Controller', () => {
     });
 
     afterAll(() => {
-        fs.existsSync.mockRestore();
-        fs.mkdirSync.mockRestore();
-        fs.writeFileSync.mockRestore();
+        fs.existsSync = existsSync;
+        fs.mkdirSync = mkdirSync;
+        fs.writeFileSync = writeFileSync;
     });
 });
