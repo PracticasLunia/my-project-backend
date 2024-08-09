@@ -14,6 +14,7 @@ export default class BookVectorDeleteService {
             
             const vectorStore = new Chroma(embeddings, {
                 collectionName: "books-collection",
+                url: process.env['CHROMADB_URL'],
             });
             await vectorStore.ensureCollection();
 

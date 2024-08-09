@@ -2,7 +2,7 @@ import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globa
 import UserSendRecoverPasswordMailService from '../../../src/services/user/user-send-recover-password-mail-service.js';
 import nodemailer from 'nodemailer';
 
-describe('Tests for User Send Verify Mail Service', () => {
+describe('Tests for User Send Recover Password Mail Service', () => {
     beforeAll(() => {
         nodemailer.createTransport = jest.fn(() => { return {
             sendMail: jest.fn().mockResolvedValue({ messageId: '123' })
@@ -29,7 +29,7 @@ describe('Tests for User Send Verify Mail Service', () => {
             await UserSendRecoverPasswordMailService.send('token', 'user');
             expect(true).toBe(false);
         }catch (err) {
-            expect(err.message).toBe("Failed sending the verficaiton email");
+            expect(err.message).toBe("Failed sending the recover password email");
         }
     });
 });

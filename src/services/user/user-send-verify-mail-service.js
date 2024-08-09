@@ -8,9 +8,6 @@ export default class UserSendVerifyMailService {
             port: process.env['MAIL_PORT']
         })
 
-        const html = `
-        
-        `
 
         const mailConfigurations = { 
             from: 'admin@admin.com', 

@@ -8,10 +8,6 @@ export default class UserSendRecoverPasswordMailService {
             port: process.env['MAIL_PORT']
         })
 
-        const html = `
-        
-        `
-
         const mailConfigurations = { 
             from: 'admin@admin.com', 
             to: user.email, 
@@ -135,7 +131,7 @@ Thanks` ,
         try{
             await transporter.sendMail(mailConfigurations);
         } catch (err) {
-            throw new Error ("Failed sending the verficaiton email")
+            throw new Error ("Failed sending the recover password email")
         }
     }   
 }

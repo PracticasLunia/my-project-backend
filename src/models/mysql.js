@@ -15,7 +15,7 @@ if(process.env.NODE_ENV !== 'test'){
             user: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
         }
-    
+
         const connection = await mysql.createConnection(config);
         await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.MYSQL_DATABASE}\`;`);
     
@@ -34,9 +34,9 @@ if(process.env.NODE_ENV !== 'test'){
         Book.belongsToMany(Tag, {through: BookTag});
         Tag.belongsToMany(Book, {through: BookTag});
 
-        //await sequelize.sync({ force: true });
-        //User.create({id: 1, name: 'admin', email: 'admin@admin.com', password: '$2a$12$YLX7w5aBktlIy67HLABmouEj/dd63qHyrHUAgsB1ClZLXyfu3l22e', admin: true, verified: true})
+        await sequelize.sync({ force: true });
+        User.create({id: 1, name: 'admin', email: 'admin@admin.com', password: '$2a$12$YLX7w5aBktlIy67HLABmouEj/dd63qHyrHUAgsB1ClZLXyfu3l22e', admin: true, verified: true})
     } catch (error) {
-        console.log("Error connecting to the database");
+        console.log("Error connecting to the database:", error.message);
     }
 }

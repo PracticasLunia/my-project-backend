@@ -3,7 +3,7 @@ import { describe, test, expect, jest, beforeEach, beforeAll } from '@jest/globa
 import UserLoginService from '../../../src/services/user/user-login-service';
 import UserRepository from '../../../src/repositories/user-repository';
 
-describe('Tests for User Login Controller', () => {
+describe('Tests for User Login Service', () => {
     beforeAll(() => {
         UserRepository.getByEmail = jest.fn(UserRepository.loginAll);
         bcrypt.compare = jest.fn(() => { return true; });

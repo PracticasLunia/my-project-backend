@@ -4,18 +4,21 @@ import { mockRequest, mockResponse } from 'jest-mock-req-res';
 import UserRecoverPasswordController from '../../../../src/ui/controllers/user/user-recover-password-controller.js';
 import JWTUtils from '../../../../src/utils/jwt.js';
 import UserGetEmailService from '../../../../src/services/user/user-get-email-service.js';
+import UserSendRecoverPasswordMailService from '../../../../src/services/user/user-send-recover-password-mail-service.js';
 
 describe('Tests for User Recover Password Controller', () => {
     beforeAll(() => {
         jwt.sign = jest.fn(() => { return { dataValues: {email: 'test@email.com'}} });
         JWTUtils.generateTokens = jest.fn(JWTUtils.generateTokens);
         UserGetEmailService.get = jest.fn(() => { return { dataValues: {email: 'test@email.com'} } })
+        UserSendRecoverPasswordMailService.send = jest.fn(() => { return void 1 });
     });
 
     beforeEach(() => {
         jwt.sign.mockClear();
         JWTUtils.generateTokens.mockClear();
         UserGetEmailService.get.mockClear();
+        UserSendRecoverPasswordMailService.send.mockClear();
     });
 
     test('Shoud call refreshToken Utils', async () => {
