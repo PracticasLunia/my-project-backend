@@ -12,8 +12,8 @@ export default class JWTUtils {
         delete data['iat'];
         delete data['exp'];
         const { token, refreshToken } = this.generateTokens(data);
-        res.cookie('token', token, { httpOnly: false, path: '/', maxAge: 2 * 60 * 60 * 1000, secure: false, sameSite: 'strict' });
-        res.cookie('refreshToken', refreshToken, { httpOnly: false, path: '/', maxAge: 24 * 60 * 60 * 1000, secure: false, sameSite: 'strict' });
+        res.cookie('token', token, { httpOnly: false, path: '/', maxAge: 2 * 60 * 60 * 1000, secure: false, sameSite: 'none' });
+        res.cookie('refreshToken', refreshToken, { httpOnly: false, path: '/', maxAge: 24 * 60 * 60 * 1000, secure: false, sameSite: 'none' });
         return {token: token, refreshToken: refreshToken}
     }
 
