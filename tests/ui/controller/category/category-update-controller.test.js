@@ -35,8 +35,8 @@ describe('Tests for Category Update Controller', () => {
         const req = mockRequest();
         const res = mockResponse();
         CategoryUpdateService.update.mockResolvedValue([1]);
-        await CategoryUpdateController.update(req, res);
 
+        await CategoryUpdateController.update(req, res);
         expect(res.json).toBeCalledWith([1]);
     });
 
