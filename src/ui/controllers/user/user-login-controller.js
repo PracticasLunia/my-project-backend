@@ -6,8 +6,8 @@ export default class UserLoginController {
         try{
             const { email, password } = req.body;
             const response = await UserLoginService.login(email, password);
-            JWTUtils.generateAndSendTokens(response.dataValues, res)
-            res.status(200).json(response);
+            const tokens = JWTUtils.generateAndSendTokens(response.dataValues, res)
+            res.status(200).json(tokens);
         } catch (err){
             res.status(err.status || 400).json({ error: err.message })
         }
