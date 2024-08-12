@@ -57,7 +57,7 @@ export default class BookVectorSearchService {
             
             return books;
         } catch (err){
-            const error = new Error("Can't search books in the vector store")
+            const error = new Error("Can't search books in the vector store:"+err.message)
             error.status = 500;
             throw error;
         }

@@ -20,7 +20,7 @@ export default class BookVectorDeleteService {
 
             await vectorStore.delete({filter: { "isbn": book.dataValues.isbn }})
         } catch (err){
-            const error = new Error("Can't delete the book from the vector store")
+            const error = new Error("Can't delete the book from the vector store:"+err.message)
             error.status = 500;
             throw error;
         }

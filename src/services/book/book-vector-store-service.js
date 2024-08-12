@@ -23,7 +23,7 @@ export default class BookVectorStoreService {
             }
             await vectorStore.addDocuments(docs);
         } catch (err){
-            const error = new Error("Can't store the book in the vector store")
+            const error = new Error("Can't store the book in the vector store:"+err.message)
             error.status = 500;
             throw error;
         }
