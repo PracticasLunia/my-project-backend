@@ -9,7 +9,7 @@ export default class BookVectorDeleteService {
                 azureOpenAIApiInstanceName: process.env['AZURE_OPENAI_API_INSTANCE_NAME'] || "",
                 azureOpenAIApiVersion: process.env['AZURE_OPENAI_API_EMBEDDINGS_VERSION'] || "v-test",
                 azureOpenAIApiEmbeddingsDeploymentName: process.env['AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME'] || "text-embedding-3-large",
-                azureOpenAIBasePath: "https://gpt-usa-02.openai.azure.com/openai/deployments",
+                azureOpenAIBasePath: process.env['AZURE_BASE_PATH'] || "test"
             },{});
             
             const vectorStore = new Chroma(embeddings, {

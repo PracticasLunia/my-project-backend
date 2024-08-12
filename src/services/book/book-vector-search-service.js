@@ -11,7 +11,7 @@ export default class BookVectorSearchService {
                 azureOpenAIApiInstanceName: process.env['AZURE_OPENAI_API_INSTANCE_NAME'] || "",
                 azureOpenAIApiVersion: process.env['AZURE_OPENAI_API_EMBEDDINGS_VERSION'] || "v-test",
                 azureOpenAIApiEmbeddingsDeploymentName: process.env['AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME'] || "text-embedding-3-large",
-                azureOpenAIBasePath: "https://gpt-usa-02.openai.azure.com/openai/deployments",
+                azureOpenAIBasePath: process.env['AZURE_BASE_PATH'] || "test"
             },{});
             
             const vectorStore = new Chroma(embeddings, {
@@ -26,7 +26,7 @@ export default class BookVectorSearchService {
                 azureOpenAIApiVersion: process.env['AZURE_OPENAI_API_VERSION'] || "v-test",
                 azureOpenAIApiDeploymentName: process.env['AZURE_OPENAI_API_DEPLOYMENT_NAME'] || "gpt-35-turbo",
                 temperature: 0.7,
-                azureOpenAIBasePath: "https://gpt-usa-02.openai.azure.com/openai/deployments",
+                azureOpenAIBasePath: process.env['AZURE_BASE_PATH'] || "test"
             });
 
             if (description === ''){
