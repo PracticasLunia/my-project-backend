@@ -13,10 +13,11 @@ export default class BookImportService {
                 azureOpenAIApiKey: process.env['AZURE_OPENAI_API_KEY'] || 'TEST_API_KEY',
                 azureOpenAIApiInstanceName: process.env['AZURE_OPENAI_MODEL'] || "gpt-35-turbo",
                 azureOpenAIApiVersion: process.env['AZURE_OPENAI_API_VERSION'] || "v-test",
-                azureOpenAIApiDeploymentName: process.env['AZURE_OPENAI_DEPLOYMENT_NAME'] || "gpt-35-turbo",
+                azureOpenAIApiDeploymentName: process.env['AZURE_OPENAI_API_DEPLOYMENT_NAME'] || "gpt-35-turbo",
                 temperature: 0.7,
                 azureOpenAIBasePath: process.env['AZURE_BASE_PATH'] || "test"
             });
+            console.log(process.env['AZURE_OPENAI_API_KEY'], process.env['AZURE_OPENAI_MODEL'], process.env['AZURE_OPENAI_API_VERSION'], process.env['AZURE_OPENAI_API_DEPLOYMENT_NAME'], process.env['AZURE_BASE_PATH'])
 
             /* GET USED ISBN */
             const books = await BookRepository.findAll()
