@@ -55,7 +55,7 @@ describe('Tests for User Login Controller', () => {
 
         UserLoginService.login.mockResolvedValue(user)
         await UserLoginController.login(req, res);
-        expect(res.json).toBeCalledWith(user);
+        expect(res.json).toBeCalledWith({token: 'test-token', refreshToken: 'test-token'});
     });
 
     test('Should return 400 error and a error message on response', async () => {

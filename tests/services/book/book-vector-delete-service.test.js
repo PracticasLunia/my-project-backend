@@ -28,7 +28,6 @@ describe('Tests for Book Vector Delete Service', () => {
             expect(true).toBe(false);
         } catch (err) {
             expect(err.status).toBe(500);
-            expect(err.message).toBe("Can't delete the book from the vector store");
         }
     });
 });

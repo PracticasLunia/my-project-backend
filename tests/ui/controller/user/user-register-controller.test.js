@@ -62,7 +62,7 @@ describe('Tests for User Register Controller', () => {
 
         UserRegisterService.register.mockResolvedValue(user)
         await UserRegisterController.register(req, res);
-        expect(res.json).toBeCalledWith(user);
+        expect(res.json).toBeCalledWith({token: 'test-token', refreshToken: 'test-token'});
     });
 
     test('Should return 400 error and a error message on response', async () => {

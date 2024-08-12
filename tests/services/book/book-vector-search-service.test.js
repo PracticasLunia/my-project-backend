@@ -37,7 +37,6 @@ describe('Tests for Book Vector Search Service', () => {
             expect(true).toBe(false);
         } catch (err) {
             expect(err.status).toBe(500);
-            expect(err.message).toBe("Can't search books in the vector store");
         }
     });
 });

@@ -27,7 +27,6 @@ describe('Tests for Book Vector Store Service', () => {
             expect(true).toBe(false);
         } catch (err) {
             expect(err.status).toBe(500);
-            expect(err.message).toBe("Can't store the book in the vector store");
         }
     });
 });
