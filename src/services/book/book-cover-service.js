@@ -14,7 +14,7 @@ export default class BookCoverService {
             const n = 1;
             const apiKey = process.env['AZURE_OPENAI_API_KEY_2'] || 'YOUR_API_KEY';
             const deployment = "Dalle3";
-            const apiVersion = "2024-04-01-preview";
+            const apiVersion = process.env['DALL_E_3_VERSION'] || "2024-04-01-preview";
             const endpoint = process.env['AZURE_OPENAI_ENDPOINT'] || 'https://api.openai.azure.com';
             const client = new AzureOpenAI({ apiKey, deployment, apiVersion, endpoint });
             const images = await client.images.generate({ prompt: promptPaint, model: deployment, n, size });
